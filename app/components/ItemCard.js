@@ -15,7 +15,7 @@ export const ItemCard = () => {
                 <Body>
                     <Image source={{ uri: 'https://i.pinimg.com/564x/a0/ed/e8/a0ede89717a03dd2a4071fe07ac105f1.jpg' }} style={{ height: 300, width: "100%", flex: 1, marginBottom: "1%" }} />
                     <Text>
-                        Remera New Collection Body
+                        Remera New Collection Body.
                     </Text>
                 </Body>
             </CardItem>
