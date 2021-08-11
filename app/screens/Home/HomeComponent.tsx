@@ -6,6 +6,7 @@ import { TouchableOpacity } from "react-native";
 import { ScrollView } from "react-native";
 import { ImageBackground } from "react-native";
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { useRoute } from "@react-navigation/native"
 
 
 export const HomeComponent = () => {
@@ -20,6 +21,7 @@ export const HomeComponent = () => {
     const [womanOption, setWomanOption] = React.useState(false)
     const [boysOption, setBoysOption] = React.useState(false)
     const [girlsOption, setGirlsOption] = React.useState(false)
+    const params: any = useRoute().params;
 
     // Methods
 
@@ -55,15 +57,35 @@ export const HomeComponent = () => {
         navigation.dispatch(StackActions.push("Men Shirts"));
     }
 
+    const goToMenHoodies = () => {
+        navigation.dispatch(StackActions.push("Men Hoodies"));
+    }
+
+    const goToMenShoes = () => {
+        navigation.dispatch(StackActions.push("Men Shoes"));
+    }
+
+    const goToCart = () => {
+        navigation.dispatch(StackActions.push("Carrito"));
+    }
+
+
+    const titleOption = () => {
+        if (menOption) {
+            return "ByBulk Shop"
+        } else {
+            return "Denmez Shop"
+        }
+    }
 
     return (
         <View style={styles.container}>
             <SafeAreaView>
                 <ScrollView>
                     <View style={styles.title}>
-                        <Text style={styles.titleText}> Shop </Text>
-                        <TouchableOpacity>
-                            <Icon name="shopping-cart" size={25} style={{ marginRight: 10 }}>
+                        <Text style={styles.titleText}> {titleOption()} </Text>
+                        <TouchableOpacity onPress={goToCart}>
+                            <Icon name="shopping-cart" size={25} style={{ marginRight: 10 }} >
                             </Icon>
                         </TouchableOpacity>
                     </View>
@@ -85,7 +107,7 @@ export const HomeComponent = () => {
                         {
                             menOption ?
                                 <ScrollView style={styles.scroll}>
-                                    <View style={{ justifyContent: 'center', alignItems: 'center', flex: 1, height: 200 }}>
+                                    <View style={{ justifyContent: 'center', alignItems: 'center', flex: 1 }}>
                                         <TouchableOpacity onPress={goToMenShirts} style={styles.backgroundImage}>
                                             <ImageBackground
                                                 source={require('../../assets/remerasOption.jpg')}
@@ -98,27 +120,31 @@ export const HomeComponent = () => {
                                             </ImageBackground>
                                         </TouchableOpacity>
                                     </View>
-                                    <View style={{ justifyContent: 'center', alignItems: 'center', flex: 1, height: 200, marginTop: '2%' }}>
-                                        <ImageBackground
-                                            source={require('../../assets/zapatillasOption.jpg')}
-                                            style={styles.remeraOption}
-                                            resizeMode="cover"
-                                        >
-                                            <View style={{ justifyContent: "center", flex: 1, alignItems: "center" }}>
-                                                <Text style={styles.optionTitle}>Zapatillas</Text>
-                                            </View>
-                                        </ImageBackground>
+                                    <View style={{ justifyContent: 'center', alignItems: 'center', flex: 1, marginTop: '2%' }}>
+                                        <TouchableOpacity onPress={goToMenShoes} style={styles.backgroundImage}>
+                                            <ImageBackground
+                                                source={require('../../assets/zapatillasOption.jpg')}
+                                                style={styles.remeraOption}
+                                                resizeMode="cover"
+                                            >
+                                                <View style={{ justifyContent: "center", flex: 1, alignItems: "center" }}>
+                                                    <Text style={styles.optionTitle}>Zapatillas</Text>
+                                                </View>
+                                            </ImageBackground>
+                                        </TouchableOpacity>
                                     </View>
-                                    <View style={{ justifyContent: 'center', alignItems: 'center', flex: 1, height: 200, marginBottom: "2%", marginTop: '2%' }}>
-                                        <ImageBackground
-                                            source={require('../../assets/buzosOption.jpg')}
-                                            style={styles.remeraOption}
-                                            resizeMode="cover"
-                                        >
-                                            <View style={{ justifyContent: "center", flex: 1, alignItems: "center" }}>
-                                                <Text style={styles.optionTitle}>Buzos</Text>
-                                            </View>
-                                        </ImageBackground>
+                                    <View style={{ justifyContent: 'center', alignItems: 'center', flex: 1, marginBottom: "2%", marginTop: '2%' }}>
+                                        <TouchableOpacity onPress={goToMenHoodies} style={styles.backgroundImage}>
+                                            <ImageBackground
+                                                source={require('../../assets/buzosOption.jpg')}
+                                                style={styles.remeraOption}
+                                                resizeMode="cover"
+                                            >
+                                                <View style={{ justifyContent: "center", flex: 1, alignItems: "center" }}>
+                                                    <Text style={styles.optionTitle}>Buzos</Text>
+                                                </View>
+                                            </ImageBackground>
+                                        </TouchableOpacity>
                                     </View>
                                 </ScrollView>
                                 :
@@ -166,6 +192,26 @@ export const HomeComponent = () => {
                                 :
                                 null
                         }
+                        {
+                            boysOption ?
+                                <ScrollView style={styles.scroll}>
+                                    <View style={{ justifyContent: 'center', alignItems: 'center', flex: 1, marginTop: '60%' }}>
+                                        <Text>Funcionalidad no disponible...</Text>
+                                    </View>
+                                </ScrollView>
+                                :
+                                null
+                        }
+                        {
+                            girlsOption ?
+                                <ScrollView style={styles.scroll}>
+                                    <View style={{ justifyContent: 'center', alignItems: 'center', flex: 1, marginTop: '60%' }}>
+                                        <Text>Funcionalidad no disponible...</Text>
+                                    </View>
+                                </ScrollView>
+                                :
+                                null
+                        }
                     </View>
                 </ScrollView>
             </SafeAreaView>
@@ -177,6 +223,7 @@ export const HomeComponent = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        marginTop: '-10%'
     },
     title: {
         justifyContent: "space-between",

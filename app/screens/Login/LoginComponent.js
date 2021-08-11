@@ -4,6 +4,7 @@ import { useNavigation, StackActions } from "@react-navigation/native";
 import { TextInput } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { Button } from 'native-base';
+import { Avatar } from 'react-native-elements';
 
 const startImageBackground = { uri: "https://con-actitud.com.ar/wp-content/uploads/2021/04/Logo-Actitud-01-Recuperado.jpg_0001_Capa-1.jpg" }
 const passwordHiddenIcon = require('../../assets/ic-show-password.png');
@@ -41,11 +42,20 @@ export const LoginComponent = () => {
         navigation.dispatch(StackActions.push("Home"));
     }
 
+    const goToRegister = () => {
+        navigation.dispatch(StackActions.push("Registro"));
+    }
+
     return (
-        <View style={styles.container}>
-            <ImageBackground source={startImageBackground} resizeMode="cover" style={styles.image}>
+        <ImageBackground source={startImageBackground} resizeMode="cover" style={styles.image}>
+            <View style={styles.container}>
                 <View style={styles.logoContainer}>
-                    <Text>Imagen</Text>
+
+                    {/* <Image
+                        source={require('../../assets/logo.jpeg')}
+                        style={styles.logo}
+                    /> */}
+
                 </View>
                 <View style={{ flex: 0 }} />
                 <View style={styles.optionsContainer}>
@@ -85,8 +95,44 @@ export const LoginComponent = () => {
                     </View>
                     <View style={styles.recoverPasswordView}>
                         <TouchableOpacity onPress={() => { }}>
-                            <Text allowFontScaling={false} >Recuperar contraseña</Text>
+                            <Text allowFontScaling={false} >He olvidado la contraseña</Text>
                         </TouchableOpacity>
+                    </View>
+                    <View style={{ flexDirection: "row", alignItems: 'center', justifyContent: 'center', paddingVertical: 15 }}>
+                        <View>
+                            <TouchableOpacity>
+                                <Avatar
+                                    rounded
+                                    size='medium'
+                                    icon={{ name: 'facebook', color: 'white', type: 'font-awesome' }}
+                                    activeOpacity={0.7}
+                                    backgroundColor="blue"
+                                />
+                            </TouchableOpacity>
+                        </View>
+                        <View style={{ marginLeft: '10%', marginRight: '10%' }}>
+                            <TouchableOpacity>
+                                <Avatar
+                                    rounded
+                                    size='medium'
+                                    icon={{ name: 'twitter', color: 'white', type: 'font-awesome' }}
+                                    activeOpacity={0.7}
+                                    backgroundColor="black"
+                                />
+                            </TouchableOpacity>
+                        </View>
+                        <View>
+                            <TouchableOpacity>
+                                <Avatar
+                                    rounded
+                                    size='medium'
+                                    icon={{ name: 'email', color: 'white', type: 'Zocial' }}
+                                    activeOpacity={0.7}
+                                    backgroundColor="red"
+
+                                />
+                            </TouchableOpacity>
+                        </View>
                     </View>
                     <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: 12, }}>
                         <Button style={styles.button} onPress={goToHome}>
@@ -100,9 +146,14 @@ export const LoginComponent = () => {
                         </View>
                     }
                 </View>
+                <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+                    <Button style={styles.buttonRegister} onPress={goToRegister}>
+                        <Text style={styles.text}>Registrarse</Text>
+                    </Button>
+                </View>
 
-            </ImageBackground>
-        </View >
+            </View >
+        </ImageBackground>
     );
 }
 
@@ -153,6 +204,11 @@ const styles = StyleSheet.create({
     button: {
         borderRadius: 5,
         width: 320,
+        justifyContent: "center",
+        backgroundColor: '#334257'
+    },
+    buttonRegister: {
+        width: '100%',
         justifyContent: "center",
         backgroundColor: '#334257'
     },

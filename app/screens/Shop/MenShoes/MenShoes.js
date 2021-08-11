@@ -3,7 +3,7 @@ import { View, StyleSheet, ScrollView } from "react-native";
 import { ItemCard } from "../../../components/ItemCard";
 import SearchBarComponent from "../../../components/SearchBar";
 
-export const MenShirts = () => {
+export const MenShoes = () => {
 
     //Properties
 
@@ -16,7 +16,7 @@ export const MenShirts = () => {
             </View>
             <ScrollView>
                 <View style={{ alignItems: 'center', justifyContent: 'center', marginTop: "5%", paddingHorizontal: 10, width: '100%' }}>
-                    <ItemCard collection="menShirts" />
+                    <ItemCard collection="menShoes" />
                 </View>
             </ScrollView>
         </View>

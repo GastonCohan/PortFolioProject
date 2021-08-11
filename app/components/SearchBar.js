@@ -20,6 +20,7 @@ export default class SearchBarComponent extends React.Component {
                     placeholder="Buscar..."
                     onChangeText={this.updateSearch}
                     value={search}
+
                 />
             </View>
         );
