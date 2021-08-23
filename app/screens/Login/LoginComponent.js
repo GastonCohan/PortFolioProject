@@ -1,10 +1,13 @@
 import React from "react";
 import { View, ImageBackground, StyleSheet, Text, Image } from "react-native";
-import { useNavigation, StackActions } from "@react-navigation/native";
+import { useNavigation, StackActions, CommonActions } from "@react-navigation/native";
 import { TextInput } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { Button } from 'native-base';
 import { Avatar } from 'react-native-elements';
+import * as Google from 'expo-google-app-auth';
+import { db } from "../../firebase/firebase";
+import firebase from "firebase";
 
 const startImageBackground = { uri: "https://con-actitud.com.ar/wp-content/uploads/2021/04/Logo-Actitud-01-Recuperado.jpg_0001_Capa-1.jpg" }
 const passwordHiddenIcon = require('../../assets/ic-show-password.png');
@@ -37,14 +40,83 @@ export const LoginComponent = () => {
         setShowPassword(!showPassword);
     }
 
+    const cleanStackAndGoToMainAction = CommonActions.reset({
+        routes: [
+            { name: 'Home' }
+        ],
+    });
+
     const goToHome = () => {
-        // todo Verificacion de usuario y contraseña
-        navigation.dispatch(StackActions.push("Home"));
+        navigation.dispatch(cleanStackAndGoToMainAction);
     }
 
     const goToRegister = () => {
         navigation.dispatch(StackActions.push("Registro"));
     }
+
+    const loginWithGoogle = async () => {
+
+        const response = await Google.logInAsync({
+            iosClientId: '955211733707-u01fru2njijvfqqfgrg1i9f01ecanmet.apps.googleusercontent.com',
+            androidClientId: '955211733707-n5pcp01vopnoeij4fd4hdj4rc5i0084p.apps.googleusercontent.com',
+            iosStandaloneAppClientId: '955211733707-u01fru2njijvfqqfgrg1i9f01ecanmet.apps.googleusercontent.com',
+            androidStandaloneAppClientId: '955211733707-n5pcp01vopnoeij4fd4hdj4rc5i0084p.apps.googleusercontent.com',
+            scopes: ["profile", "email"]
+        });
+
+        var credential = firebase.auth.GoogleAuthProvider.credential(
+            response.idToken,
+            response.accessToken
+        );
+
+        firebase.auth().signInWithCredential(credential).catch(e => { console.log(e) })
+
+        if (response.type === 'success') {
+            goToHome()
+        }
+
+        console.log(response)
+    }
+
+    const loginWithFacebook = async () => {
+        //664147698314332
+        try {
+            await Facebook.initializeAsync({
+                appId: "",
+                appName: "AndiamoProject"
+            });
+            const {
+                type,
+                token
+            } = await Facebook.logInWithReadPermissionsAsync({
+                permissions: ["public_profile", "email", "user_photos"],
+            }, "Bluerabbit");
+            if (type === 'success') {
+                // Get the user's name using Facebook's Graph API
+                const response = await fetch(`https://graph.facebook.com/me?access_token=${token}&fields=email,name,picture&type=large`);
+                const data = await response.json()
+                console.log("data", data)
+                const credential = firebase.auth.FacebookAuthProvider.credential(token)
+                firebase.auth().signInWithCredential(credential)
+            } else {
+                return
+            }
+        } catch ({ message }) {
+            console.log(message)
+        }
+    }
+
+    // firebase.auth().createUserWithEmailAndPassword("email", "password")
+
+    firebase.auth().onAuthStateChanged(user => {
+        if (user) {
+
+        } else {
+
+        }
+    })
+
+    firebase.auth().signInWithEmailAndPassword
 
     return (
         <ImageBackground source={startImageBackground} resizeMode="cover" style={styles.image}>
@@ -100,7 +172,7 @@ export const LoginComponent = () => {
                     </View>
                     <View style={{ flexDirection: "row", alignItems: 'center', justifyContent: 'center', paddingVertical: 15 }}>
                         <View>
-                            <TouchableOpacity>
+                            <TouchableOpacity onPress={() => loginWithFacebook()}>
                                 <Avatar
                                     rounded
                                     size='medium'
@@ -110,26 +182,14 @@ export const LoginComponent = () => {
                                 />
                             </TouchableOpacity>
                         </View>
-                        <View style={{ marginLeft: '10%', marginRight: '10%' }}>
-                            <TouchableOpacity>
-                                <Avatar
-                                    rounded
-                                    size='medium'
-                                    icon={{ name: 'twitter', color: 'white', type: 'font-awesome' }}
-                                    activeOpacity={0.7}
-                                    backgroundColor="black"
-                                />
-                            </TouchableOpacity>
-                        </View>
-                        <View>
-                            <TouchableOpacity>
+                        <View style={{ marginLeft: "5%" }}>
+                            <TouchableOpacity onPress={() => loginWithGoogle()}>
                                 <Avatar
                                     rounded
                                     size='medium'
                                     icon={{ name: 'email', color: 'white', type: 'Zocial' }}
                                     activeOpacity={0.7}
                                     backgroundColor="red"
-
                                 />
                             </TouchableOpacity>
                         </View>

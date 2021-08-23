@@ -17,7 +17,11 @@ export const ItemCard = (props) => {
     const [contador, setContador] = useState(1);
     const { addToCart } = useCartContext();
     const { cart, clearCart } = useCartContext();
-    const [selectProduct, setSelectProduct] = useState('')
+    const [selectProduct, setSelectProduct] = useState({})
+
+    console.log("carrito:", cart)
+    // console.log("contador: ", contador)
+    // console.log("producto seleccionado: ", selectProduct)
 
     // Methods
 
@@ -39,7 +43,7 @@ export const ItemCard = (props) => {
     const addToCartCheck = (producto) => {
         // return Alert.alert('Funcionabilidad no disponible..')
         setErrorModalVisible(true);
-        setSelectProduct(producto.title)
+        setSelectProduct(producto)
     }
 
     const addQuantityProduct = () => {
@@ -65,10 +69,10 @@ export const ItemCard = (props) => {
             {productos.map((producto) => {
                 return (
                     // <TouchableOpacity onPress={goToDetailItem}>
-                    <Card style={{ flex: 0 }} key={producto.title}>
+                    <Card style={{ flex: 0, marginBottom: '3%' }} key={producto.title}>
                         <CardItem >
                             <Body>
-                                <Image source={{ uri: producto.img1 }} style={{ height: 300, width: "100%", flex: 1, marginBottom: "1%" }} />
+                                <Image source={{ uri: producto.img1 }} style={{ height: 300, width: "100%", flex: 1, marginBottom: "1%" }} resizeMode="stretch" />
                                 <Text>
                                     {producto.title}
                                 </Text>
@@ -77,8 +81,8 @@ export const ItemCard = (props) => {
                         <CardItem style={{ marginTop: "-3%" }}>
                             <View style={{ flexDirection: 'column' }}>
                                 <View style={{ flex: 1, flexDirection: "row" }}>
-                                    <Text>Talles: </Text>
-                                    <Text style={{ marginLeft: "10%" }}>
+                                    <Text>Talles:</Text>
+                                    <Text style={{ marginLeft: "5%" }}>
                                         {producto.talle1}
                                     </Text>
                                     <Text style={{ marginLeft: "10%" }}>
@@ -89,13 +93,13 @@ export const ItemCard = (props) => {
                                     </Text>
                                 </View>
                                 <View style={{ flex: 1, flexDirection: "row", alignItems: 'center', marginTop: "5%" }}>
-                                    <Icon name="dollar" size={16} style={{ marginRight: 10 }} />
+                                    <Icon name="dollar" size={16} style={{ marginRight: 5 }} />
                                     <Text style={{ fontWeight: 'bold' }}>{producto.price}</Text>
                                 </View>
                             </View>
                         </CardItem>
                         <View style={{ flex: 1 }}>
-                            <View style={{ flex: 1, alignItems: "flex-end", marginRight: 15, marginBottom: 10 }}>
+                            <View style={{ flex: 1, alignItems: "flex-end", marginRight: 15, marginBottom: "3%" }}>
                                 <TouchableOpacity onPress={() => { addToCartCheck(producto) }}>
                                     <Icon name="cart-plus" size={25} style={{ marginRight: 10 }} >
                                     </Icon>
@@ -119,7 +123,7 @@ export const ItemCard = (props) => {
                     </View>
                     <View style={STYLES.modals.modalView}>
                         <View>
-                            <Text style={STYLES.modals.modalText}>Estás a punto de agregar este producto {selectProduct} al carrito. ¿Cuántos desea agregar? </Text>
+                            <Text style={STYLES.modals.modalText}>Estás a punto de agregar este producto {selectProduct.title} al carrito. ¿Cuántos desea agregar? </Text>
                         </View>
                         <View style={{ flexDirection: 'row', marginBottom: 15, alignItems: "center", marginTop: -5 }}>
                             <Icon name='minus' size={15} onPress={() => { restQuantityProduct() }}></Icon>
@@ -127,7 +131,7 @@ export const ItemCard = (props) => {
                             <Icon name='plus' size={15} onPress={() => { addQuantityProduct() }}></Icon>
                         </View>
 
-                        <Button color="#334257" title={"Agregar al carrito"} onPress={() => { qty => addToCart(producto, qty) }} />
+                        <Button color="#334257" title={"Agregar al carrito"} onPress={() => { addToCart(selectProduct, contador); closeModal() }} />
                         <View style={{ marginTop: 10 }}>
                             <Button color="#334257" title={"Cerrar"} onPress={closeModal} />
                         </View>

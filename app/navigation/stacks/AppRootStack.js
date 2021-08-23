@@ -6,11 +6,12 @@ import { LoginComponent } from "../../screens/Login/LoginComponent";
 import { RegisterComponent } from "../../screens/Register/RegisterComponent";
 import { HomeComponent } from "../../screens/Home/HomeComponent";
 import { MenShirts } from "../../screens/Shop/MenShirts/MenShirts";
-import { Cart } from "../../screens/Cart/CartScreen";
+import { Cart, CartComponent } from "../../screens/Cart/CartScreen";
 import { CartProvider } from "../../context/CartContext";
 import { MenHoodies } from "../../screens/Shop/MenHoodies/MenHoodies";
 import { MenShoes } from "../../screens/Shop/MenShoes/MenShoes";
 import { NAVBAR_CONFIG_DRAWER } from "../../components/NavBarConfig/NavBarConfig";
+import { BuyComponent } from "../../screens/Buy/BuyScreen";
 
 
 const AppStackNavigation = createStackNavigator();
@@ -20,11 +21,7 @@ export const AppRootStack = () => {
         <NavigationContainer>
             <StatusBar style="light" backgroundColor={"#334257"} />
             <CartProvider>
-                <AppStackNavigation.Navigator initialRouteName={HomeComponent}>
-                    <AppStackNavigation.Screen name={'Home'}
-                        component={HomeComponent}
-                        options={{ headerShown: true, ...NAVBAR_CONFIG_DRAWER }}
-                    />
+                <AppStackNavigation.Navigator initialRouteName={LoginComponent}>
                     <AppStackNavigation.Screen name={'Login'}
                         component={LoginComponent}
                         options={{ headerShown: false }}
@@ -34,6 +31,10 @@ export const AppRootStack = () => {
                         options={{
                             headerShown: true
                         }} />
+                    <AppStackNavigation.Screen name={'Home'}
+                        component={HomeComponent}
+                        options={{ headerShown: true, ...NAVBAR_CONFIG_DRAWER }}
+                    />
                     <AppStackNavigation.Screen name={'Men Shirts'}
                         component={MenShirts}
                         options={{
@@ -50,7 +51,12 @@ export const AppRootStack = () => {
                             headerShown: true,
                         }} />
                     <AppStackNavigation.Screen name={'Carrito'}
-                        component={Cart}
+                        component={CartComponent}
+                        options={{
+                            headerShown: true,
+                        }} />
+                    <AppStackNavigation.Screen name={'Formulario de Compra'}
+                        component={BuyComponent}
                         options={{
                             headerShown: true,
                         }} />
