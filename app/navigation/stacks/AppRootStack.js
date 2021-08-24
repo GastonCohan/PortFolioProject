@@ -12,6 +12,7 @@ import { MenHoodies } from "../../screens/Shop/MenHoodies/MenHoodies";
 import { MenShoes } from "../../screens/Shop/MenShoes/MenShoes";
 import { NAVBAR_CONFIG_DRAWER } from "../../components/NavBarConfig/NavBarConfig";
 import { BuyComponent } from "../../screens/Buy/BuyScreen";
+import MainDrawerStack from "./drawer/MainDrawerStack";
 
 
 const AppStackNavigation = createStackNavigator();
@@ -32,34 +33,61 @@ export const AppRootStack = () => {
                             headerShown: true
                         }} />
                     <AppStackNavigation.Screen name={'Home'}
+                        component={MainDrawerStack}
+                        options={{
+                            headerShown: false,
+                        }} />
+                    {/* <AppStackNavigation.Screen name={'Home'}
                         component={HomeComponent}
-                        options={{ headerShown: true, ...NAVBAR_CONFIG_DRAWER }}
-                    />
+                        options={{ headerShown: true }}
+                    /> */}
                     <AppStackNavigation.Screen name={'Men Shirts'}
                         component={MenShirts}
                         options={{
                             headerShown: true,
+                            headerStyle: {
+                                backgroundColor: '#334257'
+                            },
+                            headerTintColor: "#fff"
                         }} />
                     <AppStackNavigation.Screen name={'Men Hoodies'}
                         component={MenHoodies}
                         options={{
                             headerShown: true,
+                            headerStyle: {
+                                backgroundColor: '#334257'
+                            },
+                            headerTintColor: "#fff"
                         }} />
                     <AppStackNavigation.Screen name={'Men Shoes'}
                         component={MenShoes}
                         options={{
                             headerShown: true,
+                            headerStyle: {
+                                backgroundColor: '#334257'
+                            },
+                            headerTintColor: "#fff"
                         }} />
                     <AppStackNavigation.Screen name={'Carrito'}
                         component={CartComponent}
                         options={{
                             headerShown: true,
+                            headerStyle: {
+                                backgroundColor: '#334257'
+                            },
+                            headerTintColor: "#fff"
                         }} />
                     <AppStackNavigation.Screen name={'Formulario de Compra'}
                         component={BuyComponent}
                         options={{
                             headerShown: true,
+                            headerStyle: {
+                                backgroundColor: '#334257'
+                            },
+                            headerTintColor: "#fff"
                         }} />
+
+
                 </AppStackNavigation.Navigator>
             </CartProvider>
         </NavigationContainer>

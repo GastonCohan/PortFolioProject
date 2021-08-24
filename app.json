@@ -4,6 +4,9 @@
     "slug": "AndiamoShirts",
     "version": "1.0.0",
     "orientation": "portrait",
+    "facebookScheme": "fb999302834196705",
+    "facebookAppId": "999302834196705",
+    "facebookDisplayName": "AndiamoProject",
     "splash": {
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"

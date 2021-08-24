@@ -223,7 +223,8 @@ export const HomeComponent = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        marginTop: '-10%'
+        marginTop: '-10%',
+
     },
     title: {
         justifyContent: "space-between",

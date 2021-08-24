@@ -6,8 +6,9 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import { Button } from 'native-base';
 import { Avatar } from 'react-native-elements';
 import * as Google from 'expo-google-app-auth';
-import { db } from "../../firebase/firebase";
 import firebase from "firebase";
+import * as Facebook from 'expo-facebook';
+
 
 const startImageBackground = { uri: "https://con-actitud.com.ar/wp-content/uploads/2021/04/Logo-Actitud-01-Recuperado.jpg_0001_Capa-1.jpg" }
 const passwordHiddenIcon = require('../../assets/ic-show-password.png');
@@ -42,7 +43,7 @@ export const LoginComponent = () => {
 
     const cleanStackAndGoToMainAction = CommonActions.reset({
         routes: [
-            { name: 'Home' }
+            { name: "Home" }
         ],
     });
 
@@ -82,14 +83,14 @@ export const LoginComponent = () => {
         //664147698314332
         try {
             await Facebook.initializeAsync({
-                appId: "",
+                appId: "999302834196705",
                 appName: "AndiamoProject"
             });
             const {
                 type,
                 token
             } = await Facebook.logInWithReadPermissionsAsync({
-                permissions: ["public_profile", "email", "user_photos"],
+                permissions: ["public_profile", "email"],
             }, "Bluerabbit");
             if (type === 'success') {
                 // Get the user's name using Facebook's Graph API
@@ -98,6 +99,7 @@ export const LoginComponent = () => {
                 console.log("data", data)
                 const credential = firebase.auth.FacebookAuthProvider.credential(token)
                 firebase.auth().signInWithCredential(credential)
+                goToHome()
             } else {
                 return
             }
