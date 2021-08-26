@@ -48,20 +48,18 @@ export const DateTimePickerComponent = () => {
                         <Image source={dateIcon} style={{ height: 25, width: 25 }} />
                     </TouchableOpacity>
                 </View>
-                {show && (
-                    <DateTimePicker
-                        testID="dateTimePicker"
-                        value={date}
-                        mode="date"
-                        is24Hour={false}
-                        display="spinner"
-                        onChange={onChange}
-                    />
-                )}
             </View>
-            <View style={{ marginTop: 8, marginLeft: 5 }}>
-                <Text>Debe seleccionar una fecha del calendario</Text>
-            </View>
+            {show && (
+                <DateTimePicker
+                    testID="dateTimePicker"
+                    value={date}
+                    mode="date"
+                    is24Hour={false}
+                    display="calendar"
+                    onChange={onChange}
+                    style={{ height: 50, width: "100%", alignItems: 'center', alignSelf: "center", justifyContent: 'center', left: "35%" }}
+                />
+            )}
         </View>
     );
 };

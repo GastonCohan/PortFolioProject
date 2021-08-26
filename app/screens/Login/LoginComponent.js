@@ -80,7 +80,6 @@ export const LoginComponent = () => {
     }
 
     const loginWithFacebook = async () => {
-        //664147698314332
         try {
             await Facebook.initializeAsync({
                 appId: "999302834196705",

@@ -9,7 +9,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import { useRoute } from "@react-navigation/native"
 
 
-export const HomeComponent = () => {
+export const HomeComponent = (props) => {
 
     //Properties
 
@@ -66,7 +66,7 @@ export const HomeComponent = () => {
     }
 
     const goToCart = () => {
-        navigation.dispatch(StackActions.push("Carrito"));
+        props.navigation.navigate("Carrito")
     }
 
 

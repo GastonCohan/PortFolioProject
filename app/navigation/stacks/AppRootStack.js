@@ -10,9 +10,9 @@ import { Cart, CartComponent } from "../../screens/Cart/CartScreen";
 import { CartProvider } from "../../context/CartContext";
 import { MenHoodies } from "../../screens/Shop/MenHoodies/MenHoodies";
 import { MenShoes } from "../../screens/Shop/MenShoes/MenShoes";
-import { NAVBAR_CONFIG_DRAWER } from "../../components/NavBarConfig/NavBarConfig";
 import { BuyComponent } from "../../screens/Buy/BuyScreen";
 import MainDrawerStack from "./drawer/MainDrawerStack";
+import { BuyConfirmComponent } from "../../screens/Buy/BuyConfirmScreen";
 
 
 const AppStackNavigation = createStackNavigator();
@@ -36,7 +36,8 @@ export const AppRootStack = () => {
                         component={MainDrawerStack}
                         options={{
                             headerShown: false,
-                        }} />
+                        }}
+                    />
                     {/* <AppStackNavigation.Screen name={'Home'}
                         component={HomeComponent}
                         options={{ headerShown: true }}
@@ -75,10 +76,20 @@ export const AppRootStack = () => {
                             headerStyle: {
                                 backgroundColor: '#334257'
                             },
-                            headerTintColor: "#fff"
+                            headerTintColor: "#fff",
+                            headerBackTitleVisible: false
                         }} />
                     <AppStackNavigation.Screen name={'Formulario de Compra'}
                         component={BuyComponent}
+                        options={{
+                            headerShown: true,
+                            headerStyle: {
+                                backgroundColor: '#334257'
+                            },
+                            headerTintColor: "#fff"
+                        }} />
+                    <AppStackNavigation.Screen name={'Confirmar Compra'}
+                        component={BuyConfirmComponent}
                         options={{
                             headerShown: true,
                             headerStyle: {
