@@ -21,6 +21,7 @@ export const BuyComponent = () => {
     const [telefone, onTelefoneChange] = React.useState('');
     const [direccion, onDireccionChange] = React.useState('');
     const [altura, onAlturaChange] = React.useState('');
+    const [piso, onPisoChange] = React.useState('');
     const [codigoPostal, onCodigoPostalChange] = React.useState('');
     const [barrio, onBarrioChange] = React.useState('');
     const [continueClickText, setContinueClickText] = React.useState(false);
@@ -41,7 +42,7 @@ export const BuyComponent = () => {
         return false
     }
 
-    const goToBuyConfirm = (name, lastname, email, telefone, metodoDeEntregaEnIos, metodoDeEntregaEnAndroid, metodoDePagoEnIos, metodoDePagoEnAndroid, direccion, altura, codigoPostal, barrio) => {
+    const goToBuyConfirm = (name, lastname, email, telefone, metodoDeEntregaEnIos, metodoDeEntregaEnAndroid, metodoDePagoEnIos, metodoDePagoEnAndroid, direccion, altura, codigoPostal, barrio, piso) => {
         navigation.dispatch(StackActions.push("Confirmar Compra", {
             ["name"]: name,
             ["lastname"]: lastname,
@@ -53,6 +54,7 @@ export const BuyComponent = () => {
             ["metodoDePagoEnAndroid"]: metodoDePagoEnAndroid,
             ["direccion"]: direccion,
             ["altura"]: altura,
+            ["piso"]: piso,
             ["codigoPostal"]: codigoPostal,
             ["barrio"]: barrio,
         }));
@@ -101,7 +103,7 @@ export const BuyComponent = () => {
     const continueClick = () => {
         if ((metodoDeEntregaEnIos != null || metodoDeEntregaEnAndroid != null) && (metodoDePagoEnAndroid != null || metodoDePagoEnIos != null) && isValidForm()) {
             setContinueClickText(false)
-            goToBuyConfirm(name, lastname, email, telefone, metodoDeEntregaEnIos, metodoDeEntregaEnAndroid, metodoDePagoEnIos, metodoDePagoEnAndroid, direccion, altura, codigoPostal, barrio)
+            goToBuyConfirm(name, lastname, email, telefone, metodoDeEntregaEnIos, metodoDeEntregaEnAndroid, metodoDePagoEnIos, metodoDePagoEnAndroid, direccion, altura, codigoPostal, barrio, piso)
         } else {
             setContinueClickText(true)
         }
@@ -159,7 +161,7 @@ export const BuyComponent = () => {
                         <DateTimePickerComponent />
                     </View> */}
                     <View style={{ paddingRight: "1%", marginTop: '5%' }}>
-                        <View style={{ marginBottom: 8, marginLeft: 5 }}>
+                        <View style={{ marginBottom: 10, marginLeft: 5 }}>
                             <Text>Debe seleccionar un metodo de entrega</Text>
                         </View>
                         {
@@ -169,7 +171,7 @@ export const BuyComponent = () => {
                                         onValueChange={(value) => setMetodoDeEntregaEnIos(value)}
                                         placeholder={placeholder}
                                         items={[
-                                            { label: 'Retirar en Local (Puan 1578)', value: "rl" },
+                                            { label: 'Retirar en local (Puan 1578)', value: "rl" },
                                             { label: 'Entregar en dirección propia', value: "ed" },
                                         ]}
                                         style={{ textColor: 'black' }}
@@ -184,12 +186,22 @@ export const BuyComponent = () => {
                                         }
                                     >
                                         <Picker.Item label="Debe seleccionar un metodo de entrega" value={null} />
-                                        <Picker.Item label="Retirar en Local (Puan 1578)" value="rl" />
+                                        <Picker.Item label="Retirar en local (Puan 1578)" value="rl" />
                                         <Picker.Item label="Entregar en dirección propia" value="ed" />
                                     </Picker>
                                 </View>
                         }
                     </View>
+                    {
+                        metodoDeEntregaEnIos === "rl" || metodoDeEntregaEnAndroid === "rl" ?
+                            <View>
+                                <Text style={{ marginHorizontal: 5, marginTop: 10, color: 'red' }}>
+                                    Se le va a contactar para coordinar la entrega.
+                                </Text>
+                            </View>
+                            :
+                            null
+                    }
                     {metodoDeEntregaEnIos === "ed" || metodoDeEntregaEnAndroid === "ed" ?
 
                         <View style={{ flex: 1, marginTop: '5%', width: '100%' }}>
@@ -217,7 +229,18 @@ export const BuyComponent = () => {
                                     autoCapitalize='none'
                                     autoCorrect={false}
                                     style={{ width: "100%" }}
-                                    placeholder={"Av. Rivadavia"}
+                                    placeholder={"1234"}
+                                />
+                            </Item>
+                            <Item stackedLabel>
+                                <Label style={{ color: 'black', marginBottom: "3%" }}>Piso</Label>
+                                <TextInput onChangeText={text => onPisoChange(text)}
+                                    allowFontScaling={false}
+                                    value={piso}
+                                    autoCapitalize='none'
+                                    autoCorrect={false}
+                                    style={{ width: "100%" }}
+                                    placeholder={"4 a"}
                                 />
                             </Item>
                             <Item stackedLabel>
@@ -228,24 +251,26 @@ export const BuyComponent = () => {
                                     autoCapitalize='none'
                                     autoCorrect={false}
                                     style={{ width: "100%" }}
-                                    placeholder={"Av. Rivadavia"}
+                                    placeholder={"4321"}
                                 />
                             </Item>
-                            <Label style={{ color: 'black', marginBottom: "3%" }}>Barrio</Label>
-                            <TextInput onChangeText={text => onBarrioChange(text)}
-                                allowFontScaling={false}
-                                value={barrio}
-                                autoCapitalize='none'
-                                autoCorrect={false}
-                                style={{ width: "100%" }}
-                                placeholder={"Av. Rivadavia"}
-                            />
+                            <Item stackedLabel>
+                                <Label style={{ color: 'black', marginBottom: "3%" }}>Barrio</Label>
+                                <TextInput onChangeText={text => onBarrioChange(text)}
+                                    allowFontScaling={false}
+                                    value={barrio}
+                                    autoCapitalize='none'
+                                    autoCorrect={false}
+                                    style={{ width: "100%" }}
+                                    placeholder={"Caballito"}
+                                />
+                            </Item>
                         </View>
                         :
                         null
                     }
                     <View style={{ paddingRight: "1%", marginTop: '5%' }}>
-                        <View style={{ marginBottom: 8, marginLeft: 5 }}>
+                        <View style={{ marginBottom: 10, marginLeft: 5 }}>
                             <Text>Debe seleccionar un metodo de pago</Text>
                         </View>
                         {

@@ -49,7 +49,8 @@ export const AppRootStack = () => {
                             headerStyle: {
                                 backgroundColor: '#334257'
                             },
-                            headerTintColor: "#fff"
+                            headerTintColor: "#fff",
+                            headerBackTitleVisible: false
                         }} />
                     <AppStackNavigation.Screen name={'Men Hoodies'}
                         component={MenHoodies}
@@ -58,7 +59,8 @@ export const AppRootStack = () => {
                             headerStyle: {
                                 backgroundColor: '#334257'
                             },
-                            headerTintColor: "#fff"
+                            headerTintColor: "#fff",
+                            headerBackTitleVisible: false
                         }} />
                     <AppStackNavigation.Screen name={'Men Shoes'}
                         component={MenShoes}
@@ -67,7 +69,8 @@ export const AppRootStack = () => {
                             headerStyle: {
                                 backgroundColor: '#334257'
                             },
-                            headerTintColor: "#fff"
+                            headerTintColor: "#fff",
+                            headerBackTitleVisible: false
                         }} />
                     <AppStackNavigation.Screen name={'Carrito'}
                         component={CartComponent}
@@ -86,7 +89,8 @@ export const AppRootStack = () => {
                             headerStyle: {
                                 backgroundColor: '#334257'
                             },
-                            headerTintColor: "#fff"
+                            headerTintColor: "#fff",
+                            headerBackTitleVisible: false
                         }} />
                     <AppStackNavigation.Screen name={'Confirmar Compra'}
                         component={BuyConfirmComponent}
@@ -95,7 +99,8 @@ export const AppRootStack = () => {
                             headerStyle: {
                                 backgroundColor: '#334257'
                             },
-                            headerTintColor: "#fff"
+                            headerTintColor: "#fff",
+                            headerBackTitleVisible: false
                         }} />
 
 

@@ -22,16 +22,41 @@ function CustomDrawer(props) {
         navigation.dispatch(cleanStackAndGoToMainAction);
     }
 
+    const goToHome = () => {
+        props.navigation.navigate("Home")
+        props.navigation.closeDrawer()
+    }
+
+    const goToCart = () => {
+        props.navigation.navigate("Carrito")
+        props.navigation.closeDrawer()
+    }
+
+    const goToMenShrits = () => {
+        props.navigation.navigate("Men Shirts")
+        props.navigation.closeDrawer()
+    }
+
+    const goToMenShoes = () => {
+        props.navigation.navigate("Men Shoes")
+        props.navigation.closeDrawer()
+    }
+
+    const goToMenHoodies = () => {
+        props.navigation.navigate("Men Hoodies")
+        props.navigation.closeDrawer()
+    }
+
     return (
         <View style={{ flex: 1 }}>
             <DrawerContentScrollView {...props}>
                 <DrawerItem
                     label="Home"
-                    onPress={() => props.navigation.navigate("Home")}
+                    onPress={() => goToHome()}
                 />
                 <DrawerItem
                     label="Carrito"
-                    onPress={() => props.navigation.navigate("Carrito")}
+                    onPress={() => goToCart()}
 
                 />
                 <View style={{ marginTop: 50, marginBottom: 15 }}>
@@ -40,15 +65,15 @@ function CustomDrawer(props) {
                     </View>
                     <DrawerItem
                         label="Remeras"
-                        onPress={() => props.navigation.navigate("Men Shirts")}
+                        onPress={() => goToMenShrits()}
                     />
                     <DrawerItem
                         label="Zapatillas"
-                        onPress={() => props.navigation.navigate("Men Shoes")}
+                        onPress={() => goToMenShoes()}
                     />
                     <DrawerItem
                         label="Buzos"
-                        onPress={() => props.navigation.navigate("Men Hoodies")}
+                        onPress={() => goToMenHoodies()}
                     />
                 </View>
                 <View style={{ marginTop: 25, marginBottom: 15 }}>

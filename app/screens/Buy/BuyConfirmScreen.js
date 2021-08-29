@@ -1,10 +1,9 @@
-import React, { Component } from 'react';
-import { Content, Card, CardItem, Body, Button, Left, Thumbnail } from 'native-base';
+import React from 'react';
+import { Card, CardItem, Body, Button, Left, Thumbnail } from 'native-base';
 import { View, StyleSheet, ScrollView, Text } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useCartContext } from "../../context/CartContext";
 import { useRoute } from "@react-navigation/native";
-import { set } from 'react-native-reanimated';
 
 export const BuyConfirmComponent = () => {
 
@@ -24,6 +23,7 @@ export const BuyConfirmComponent = () => {
     let alturaRecived = params["altura"];
     let codigoPostalRecived = params["codigoPostal"];
     let barrioRecived = params["barrio"];
+    let pisoRecived = params["piso"];
 
     const [name] = React.useState(nameRecived);
     const [lastname] = React.useState(lastnameRecived);
@@ -35,9 +35,9 @@ export const BuyConfirmComponent = () => {
     const [metodoDePagoEnAndroid] = React.useState(metodoDePagoEnAndroidRecived);
     const [direccion] = React.useState(direccionRecived);
     const [altura] = React.useState(alturaRecived);
+    const [piso] = React.useState(pisoRecived);
     const [codigoPostal] = React.useState(codigoPostalRecived);
     const [barrio] = React.useState(barrioRecived);
-
 
 
     const goBack = () => {
@@ -50,13 +50,13 @@ export const BuyConfirmComponent = () => {
 
     const metodoDeEntrega = () => {
         if (metodoDeEntregaEnIos === "rl") {
-            return "Retirar en Local (Puan 1578)"
+            return "Retirar en local (Puan 1578)"
         } if (metodoDeEntregaEnIos === "ed") {
-            return "Entregar en Dirección propia"
+            return "Entregar en dirección propia"
         } if (metodoDeEntregaEnAndroid === "rl") {
-            return "Retirar en Local (Puan 1578)"
+            return "Retirar en local (Puan 1578)"
         } if (metodoDeEntregaEnAndroid === "ed") {
-            return "Entregar en Dirección propia"
+            return "Entregar en dirección propia"
         } else {
             return null
         }
@@ -109,7 +109,7 @@ export const BuyConfirmComponent = () => {
                                             <View>
                                                 <Text style={{ marginBottom: '4%', fontSize: 15 }}>Dirección: {direccion} </Text>
                                                 <Text style={{ marginBottom: '4%', fontSize: 15 }}>Altura: {altura}</Text>
-                                                <Text style={{ marginBottom: '4%', fontSize: 15 }}>Piso: </Text>
+                                                <Text style={{ marginBottom: '4%', fontSize: 15 }}>Piso: {piso}</Text>
                                                 <Text style={{ marginBottom: '4%', fontSize: 15 }}>Código Postal: {codigoPostal} </Text>
                                                 <Text style={{ marginBottom: '4%', fontSize: 15 }}>Barrio: {barrio}</Text>
                                             </View>
@@ -151,7 +151,7 @@ export const BuyConfirmComponent = () => {
                 </View>
                 <View style={{ justifyContent: 'center', alignItems: "center" }}>
                     <View style={{ marginTop: '5%' }}>
-                        <Button style={styles.button} onPress={() => { buyConfirm() }} >
+                        <Button style={styles.button} onPress={() => { }} >
                             <Text style={styles.text}>Confirmar compra</Text>
                         </Button>
                     </View>
