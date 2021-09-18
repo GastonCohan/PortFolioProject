@@ -18,8 +18,12 @@ function CustomDrawer(props) {
     });
 
     const logOut = async () => {
-        firebase.auth().signOut()
-        navigation.dispatch(cleanStackAndGoToMainAction);
+        try {
+            await firebase.auth().signOut();
+            navigation.dispatch(cleanStackAndGoToMainAction);
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     const goToHome = () => {

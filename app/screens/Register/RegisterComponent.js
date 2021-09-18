@@ -3,7 +3,7 @@ import { View, StyleSheet, Text, ImageBackground, Image } from "react-native";
 import { TextInput } from "react-native";
 import { Button, CheckBox } from 'native-base';
 import { TouchableOpacity } from "react-native-gesture-handler";
-
+import { auth } from "../../firebase/firebase";
 
 const passwordHiddenIcon = require('../../assets/ic-show-password.png');
 const passwordNotHiddenIcon = require('../../assets/ic-hide-password.png');
@@ -29,6 +29,17 @@ export const RegisterComponent = () => {
         setOnCheck(!check)
         return check
     }
+
+    const register = () => {
+        auth
+            .createUserWithEmailAndPassword(email, password)
+            .then((authUser) => {
+                authUser.user.updateProfile({
+                    displayName: username
+                })
+            })
+            .catch((error) => alert(error.message));
+    };
 
     return (
         <View style={{ flex: 1, backgroundColor: '#C9CCD5' }}>
@@ -73,7 +84,7 @@ export const RegisterComponent = () => {
                 <View style={styles.input}>
                     <View style={{ justifyContent: 'center', alignItems: 'center', flexDirection: "row" }}>
                         <View style={{ flexDirection: 'row', justifyContent: 'space-between', flex: 1, paddingHorizontal: 15 }}>
-                            <TextInput onChangeText={text => onPasswordChange(text)}
+                            <TextInput onChangeText={text => onRepeatPasswordChange(text)}
                                 placeholder="Repita la contraseña"
                                 placeholderTextColor="white"
                                 value={repeatPassword}
@@ -93,10 +104,10 @@ export const RegisterComponent = () => {
                 </View>
                 <View style={styles.input}>
                     <View style={{ justifyContent: 'flex-start', paddingHorizontal: 15 }}>
-                        <TextInput onChangeText={text => onUsernameChange(text)}
+                        <TextInput onChangeText={text => onEmailChange(text)}
                             placeholder="Email"
                             placeholderTextColor="white"
-                            value={username}
+                            value={email}
                             autoCapitalize='none'
                             autoCorrect={false}
                             color="white"
@@ -116,7 +127,7 @@ export const RegisterComponent = () => {
                     </TouchableOpacity>
                 </View>
                 <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: "10%" }}>
-                    <Button style={styles.buttonRegister} onPress={{}}>
+                    <Button style={styles.buttonRegister} onPress={register}>
                         <View style={{ justifyContent: 'center', alignItems: 'center', flex: 1 }}>
                             <Text style={styles.text}>Registrarse</Text>
                         </View>

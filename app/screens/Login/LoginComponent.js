@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { View, ImageBackground, StyleSheet, Text, Image } from "react-native";
 import { useNavigation, StackActions, CommonActions } from "@react-navigation/native";
 import { TextInput } from "react-native";
@@ -8,6 +8,7 @@ import { Avatar } from 'react-native-elements';
 import * as Google from 'expo-google-app-auth';
 import firebase from "firebase";
 import * as Facebook from 'expo-facebook';
+import { auth } from "../../firebase/firebase";
 
 
 const startImageBackground = { uri: "https://con-actitud.com.ar/wp-content/uploads/2021/04/Logo-Actitud-01-Recuperado.jpg_0001_Capa-1.jpg" }
@@ -22,12 +23,22 @@ export const LoginComponent = () => {
 
     // UI STATES 
 
-    const [username, onUsernameChange] = React.useState('');
+    const [email, onEmailChange] = React.useState('');
     const [password, onPasswordChange] = React.useState('');
     const [showPassword, setShowPassword] = React.useState(false);
 
 
     // Methods
+
+    useEffect(() => {
+        const unsubscribe = auth.onAuthStateChanged((authUser) => {
+            if (authUser) {
+                navigation.replace("Home")
+            }
+        });
+
+        return unsubscribe
+    }, [])
 
     const usernameIsInvalid = () => {
         if (1 < 0) {
@@ -107,17 +118,15 @@ export const LoginComponent = () => {
         }
     }
 
-    // firebase.auth().createUserWithEmailAndPassword("email", "password")
-
-    firebase.auth().onAuthStateChanged(user => {
-        if (user) {
-
-        } else {
-
-        }
-    })
-
-    // firebase.auth().signInWithEmailAndPassword
+    const loginwithemail = () => {
+        firebase
+            .auth()
+            .signInWithEmailAndPassword(email, password)
+            .then(() => {
+                navigation.replace('Home')
+            })
+            .catch(error => { alert(error.message) })
+    }
 
     return (
         <ImageBackground source={startImageBackground} resizeMode="cover" style={styles.image}>
@@ -134,10 +143,10 @@ export const LoginComponent = () => {
                 <View style={styles.optionsContainer}>
                     <View style={styles.input}>
                         <View style={{ justifyContent: 'flex-start', paddingHorizontal: 15 }}>
-                            <TextInput onChangeText={text => onUsernameChange(text)}
-                                placeholder="Usuario"
+                            <TextInput onChangeText={text => onEmailChange(text)}
+                                placeholder="Email"
                                 placeholderTextColor="white"
-                                value={username}
+                                value={email}
                                 autoCapitalize='none'
                                 autoCorrect={false}
                                 color="white"
@@ -196,7 +205,7 @@ export const LoginComponent = () => {
                         </View>
                     </View>
                     <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: 12, }}>
-                        <Button style={styles.button} onPress={goToHome}>
+                        <Button style={styles.button} onPress={loginwithemail}>
                             <Text style={styles.text}>Ingresar</Text>
                         </Button>
                     </View>

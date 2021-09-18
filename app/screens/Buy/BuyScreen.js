@@ -150,6 +150,7 @@ export const BuyComponent = () => {
                         <Label style={{ color: 'black', marginBottom: "3%" }}>Teléfono</Label>
                         <TextInput onChangeText={text => onTelefoneChange(text)}
                             allowFontScaling={false}
+                            keyboardType="numeric"
                             value={telefone}
                             autoCapitalize='none'
                             autoCorrect={false}

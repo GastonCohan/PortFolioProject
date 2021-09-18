@@ -11,7 +11,17 @@ var firebaseConfig = {
     measurementId: "G-LMZ6PK102Y"
 };
 
-const fb = firebase.initializeApp(firebaseConfig);
+let fb
+
+if (firebase.apps.length === 0) {
+    fb = firebase.initializeApp(firebaseConfig);
+} else {
+    fb = firebase.app();
+}
+
 // firebase.analytics();
 
-export const db = fb.firestore();
+const auth = firebase.auth()
+const db = fb.firestore();
+
+export { db, auth }
