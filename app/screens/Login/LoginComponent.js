@@ -117,7 +117,7 @@ export const LoginComponent = () => {
         }
     })
 
-    firebase.auth().signInWithEmailAndPassword
+    // firebase.auth().signInWithEmailAndPassword
 
     return (
         <ImageBackground source={startImageBackground} resizeMode="cover" style={styles.image}>

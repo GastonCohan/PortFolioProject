@@ -18,7 +18,7 @@
     "expo-facebook": "~11.3.1",
     "expo-google-app-auth": "^8.2.2",
     "expo-status-bar": "~1.0.4",
-    "firebase": "^8.9.0",
+    "firebase": "8.2.3",
     "native-base": "^2.15.2",
     "react": "16.13.1",
     "react-dom": "16.13.1",

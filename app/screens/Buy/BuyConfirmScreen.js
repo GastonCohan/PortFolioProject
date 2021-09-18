@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Card, CardItem, Body, Button, Left, Thumbnail } from 'native-base';
 import { View, StyleSheet, ScrollView, Text } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, CommonActions } from "@react-navigation/native";
 import { useCartContext } from "../../context/CartContext";
 import { useRoute } from "@react-navigation/native";
+import { db } from '../../firebase/firebase';
+
 
 export const BuyConfirmComponent = () => {
 
@@ -39,7 +41,6 @@ export const BuyConfirmComponent = () => {
     const [codigoPostal] = React.useState(codigoPostalRecived);
     const [barrio] = React.useState(barrioRecived);
 
-
     const goBack = () => {
         navigation.goBack("Formulario de compra");
     }
@@ -50,11 +51,11 @@ export const BuyConfirmComponent = () => {
 
     const metodoDeEntrega = () => {
         if (metodoDeEntregaEnIos === "rl") {
-            return "Retirar en local (Puan 1578)"
+            return "Retirar en local (Calasanz 1578)"
         } if (metodoDeEntregaEnIos === "ed") {
             return "Entregar en dirección propia"
         } if (metodoDeEntregaEnAndroid === "rl") {
-            return "Retirar en local (Puan 1578)"
+            return "Retirar en local (Calasanz 1578)"
         } if (metodoDeEntregaEnAndroid === "ed") {
             return "Entregar en dirección propia"
         } else {
@@ -76,14 +77,77 @@ export const BuyConfirmComponent = () => {
         }
     }
 
+    const goToHome = () => {
+        navigation.dispatch(cleanStackAndGoToMainAction);
+    }
+
+    const cleanStackAndGoToMainAction = CommonActions.reset({
+        routes: [
+            { name: "Home" }
+        ],
+    });
+
     const buyConfirm = () => {
-        // limpiar stock
-        // mandar datos a firebase
-        // mandar a home
+        // actualizar stock (to do)
+
+        updateStock()
+
+        // mandar datos a firebase (listo)
+
+        // mandar a home (listo)
+
+        goToHome()
+
+        // mandar mail a ambos (to do)
+
+        handleSubmit()
+
+        // limpiar carrito (listo)
         clearCart()
     }
 
+    // const sendEmail = () => {
+    //     // emailjs.sendForm(`gmail`, "service_i8nbgw7X", e.target, `template_6gmra19`)
 
+    //         .then((result) => {
+    //             alert("Message Sent, We will get back to you shortly", result.text);
+    //         },
+    //             (error) => {
+    //                 alert("An error occurred, Please try again", error.text);
+    //             });
+    // };
+
+
+
+    const addOrder = async (object) => {
+        // console.log('Product', object);
+        await db.collection("orders").doc().set(object);
+        console.log('Order Created');
+    };
+
+    const initialState = {
+        nombre: name,
+        apellido: lastname,
+        email: email,
+        telefono: telefone,
+        productos: cart
+    };
+
+    const [values, setValues] = useState(initialState);
+
+    const handleOnSubmit = () => {
+        addOrder(values);
+    };
+
+
+    const updateStock = () => {
+        cart.forEach(item => {
+            const docRef = db.collection("menShirts").doc(item.id);
+            docRef.update({ stock: item.stock - item.quantity })
+            // const docRef2 = db.collection("legoProducts").doc(item.id);
+            // docRef2.update({ stock: item.stock - item.quantity })
+        })
+    }
 
     return (
 
@@ -151,7 +215,7 @@ export const BuyConfirmComponent = () => {
                 </View>
                 <View style={{ justifyContent: 'center', alignItems: "center" }}>
                     <View style={{ marginTop: '5%' }}>
-                        <Button style={styles.button} onPress={() => { }} >
+                        <Button style={styles.button} onPress={() => { buyConfirm() }} >
                             <Text style={styles.text}>Confirmar compra</Text>
                         </Button>
                     </View>
