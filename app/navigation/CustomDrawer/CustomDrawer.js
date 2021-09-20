@@ -1,11 +1,9 @@
 import React from 'react'
 import { DrawerContentScrollView } from '@react-navigation/drawer';
 import { DrawerItem } from '@react-navigation/drawer';
-import { StackActions, CommonActions, useNavigation } from "@react-navigation/native";
+import { CommonActions, useNavigation } from "@react-navigation/native";
 import { Text, View, TouchableOpacity } from 'react-native'
-import { LoginComponent } from '../../screens/Login/LoginComponent';
 import firebase from 'firebase';
-import Icon from 'react-native-vector-icons/FontAwesome';
 
 function CustomDrawer(props) {
 
@@ -55,7 +53,7 @@ function CustomDrawer(props) {
         <View style={{ flex: 1 }}>
             <DrawerContentScrollView {...props}>
                 <DrawerItem
-                    label="Home"
+                    label="Inicio"
                     onPress={() => goToHome()}
                 />
                 <DrawerItem

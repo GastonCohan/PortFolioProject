@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Card, CardItem, Body, Button, Left, Thumbnail } from 'native-base';
-import { View, StyleSheet, ScrollView, Text } from "react-native";
+import { View, StyleSheet, ScrollView, Text, Alert } from "react-native";
 import { useNavigation, CommonActions } from "@react-navigation/native";
 import { useCartContext } from "../../context/CartContext";
 import { useRoute } from "@react-navigation/native";
@@ -88,22 +88,25 @@ export const BuyConfirmComponent = () => {
     });
 
     const buyConfirm = () => {
-        // actualizar stock (to do)
+        // actualizar stock
 
         updateStock()
 
-        // mandar datos a firebase (listo)
 
-        // mandar a home (listo)
-
-        goToHome()
 
         // mandar mail a ambos (to do)
 
-        handleSubmit()
+        handleOnSubmit()
 
-        // limpiar carrito (listo)
+        // alerta compra confirmada 
+
+        Alert.alert('Compra confirmada')
+
+        // limpiar carrito
         clearCart()
+
+        // mandar a home
+        goToHome()
     }
 
     // const sendEmail = () => {
@@ -120,9 +123,12 @@ export const BuyConfirmComponent = () => {
 
 
     const addOrder = async (object) => {
-        // console.log('Product', object);
-        await db.collection("orders").doc().set(object);
-        console.log('Order Created');
+        try {
+            // console.log('Product', object);
+            await db.collection("orders").doc().set(object);
+        } catch (error) {
+            console.log(error);
+        }
     };
 
     const initialState = {

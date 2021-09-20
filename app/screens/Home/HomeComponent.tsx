@@ -8,7 +8,6 @@ import { ImageBackground } from "react-native";
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { useRoute } from "@react-navigation/native"
 
-
 export const HomeComponent = (props) => {
 
     //Properties
@@ -91,16 +90,16 @@ export const HomeComponent = (props) => {
                     </View>
                     <View style={styles.options}>
                         <TouchableOpacity onPress={menOptionFunction}>
-                            <Text style={{ fontSize: 15, fontWeight: menOption ? "bold" : "normal" }}> Men</Text>
+                            <Text style={{ fontSize: 15, fontWeight: menOption ? "bold" : "normal" }}> Hombre</Text>
                         </TouchableOpacity>
                         <TouchableOpacity style={styles.button} onPress={womanOptionFunction}>
-                            <Text style={{ fontSize: 15, fontWeight: womanOption ? "bold" : "normal" }}> Woman</Text>
+                            <Text style={{ fontSize: 15, fontWeight: womanOption ? "bold" : "normal" }}> Mujer</Text>
                         </TouchableOpacity>
                         <TouchableOpacity style={styles.button} onPress={boysOptionFunction}>
-                            <Text style={{ fontSize: 15, fontWeight: boysOption ? "bold" : "normal" }}> Boys</Text>
+                            <Text style={{ fontSize: 15, fontWeight: boysOption ? "bold" : "normal" }}> Niño</Text>
                         </TouchableOpacity>
                         <TouchableOpacity style={styles.button} onPress={menOptionFuntion}>
-                            <Text style={{ fontSize: 15, fontWeight: girlsOption ? "bold" : "normal" }}> Girls</Text>
+                            <Text style={{ fontSize: 15, fontWeight: girlsOption ? "bold" : "normal" }}> Niña</Text>
                         </TouchableOpacity>
                     </View>
                     <View>

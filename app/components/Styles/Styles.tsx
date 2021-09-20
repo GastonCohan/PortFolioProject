@@ -11,7 +11,7 @@ const STYLES = {
         } as ViewStyle,
         modalTitle: {
             justifyContent: 'center',
-            height: 30,
+            height: 35,
             padding: 8,
             backgroundColor: "#334257",
             width: '75%',
@@ -30,7 +30,7 @@ const STYLES = {
             fontSize: 16,
             color: 'white',
             textAlign: "center",
-            fontWeight: 'bold'
+            fontWeight: 'bold',
         } as ViewStyle,
         modalView: {
             marginTop: 0,

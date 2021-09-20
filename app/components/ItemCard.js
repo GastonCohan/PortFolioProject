@@ -16,10 +16,12 @@ export const ItemCard = (props) => {
     const [errorModalVisible, setErrorModalVisible] = React.useState(false);
     const [contador, setContador] = useState(1);
     const { addToCart } = useCartContext();
-    const { cart, clearCart } = useCartContext();
     const [selectProduct, setSelectProduct] = useState({})
+    const [selected1, setIsSelected1] = useState(false)
+    const [selected2, setIsSelected2] = useState(false)
+    const [selected3, setIsSelected3] = useState(false)
+    const [addButton, setAddButton] = useState(false)
 
-    console.log("carrito:", cart)
     // console.log("contador: ", contador)
     // console.log("producto seleccionado: ", selectProduct)
 
@@ -62,8 +64,43 @@ export const ItemCard = (props) => {
     const closeModal = () => {
         setErrorModalVisible(false)
         setContador(1)
+        setIsSelected1(false)
+        setIsSelected2(false)
+        setIsSelected3(false)
     }
 
+    const closeModalAdd = () => {
+        if (selected1 === true || selected1 === true || selected1 === true) {
+            addToCart(selectProduct, contador);
+            // addSize(selectProduct, )
+            setErrorModalVisible(false)
+            setContador(1)
+            setIsSelected1(false)
+            setIsSelected2(false)
+            setIsSelected3(false)
+            setAddButton(false)
+        } else {
+            setAddButton(true)
+        }
+    }
+
+    const isSelected1 = () => {
+        setIsSelected1(true)
+        setIsSelected2(false)
+        setIsSelected3(false)
+    }
+
+    const isSelected2 = () => {
+        setIsSelected1(false)
+        setIsSelected2(true)
+        setIsSelected3(false)
+    }
+
+    const isSelected3 = () => {
+        setIsSelected1(false)
+        setIsSelected2(false)
+        setIsSelected3(true)
+    }
     return (
         <View style={{ width: '100%' }}>
             {productos.map((producto) => {
@@ -125,13 +162,25 @@ export const ItemCard = (props) => {
                         <View>
                             <Text style={STYLES.modals.modalText}>Estás a punto de agregar este producto {selectProduct.title} al carrito. ¿Cuántos desea agregar? </Text>
                         </View>
-                        <View style={{ flexDirection: 'row', marginBottom: 15, alignItems: "center", marginTop: -5 }}>
+                        <View style={{ flexDirection: 'row', marginBottom: 15, alignItems: "center", marginTop: -5, marginRight: 0 }}>
                             <Icon name='minus' size={15} onPress={() => { restQuantityProduct() }}></Icon>
                             <Text style={{ fontSize: 20 }}>  {contador}  </Text>
                             <Icon name='plus' size={15} onPress={() => { addQuantityProduct() }}></Icon>
                         </View>
-
-                        <Button color="#334257" title={"Agregar al carrito"} onPress={() => { addToCart(selectProduct, contador); closeModal() }} />
+                        <Text style={{ marginBottom: 15 }}> Elije el talle: </Text>
+                        <View style={{ flexDirection: 'row', marginBottom: 10, alignItems: "center", marginTop: -5 }}>
+                            <Text onPress={() => { isSelected1() }} style={{ marginRight: 15, fontSize: 18, color: selected1 ? "blue" : "black", borderWidth: selected1 ? 1 : 0, padding: selected1 ? 5 : 0 }}>{selectProduct.talle1}</Text>
+                            <Text onPress={() => { isSelected2() }} style={{ marginRight: 15, fontSize: 18, color: selected2 ? "blue" : "black", borderWidth: selected2 ? 1 : 0, padding: selected2 ? 5 : 0 }}>{selectProduct.talle2}</Text>
+                            <Text onPress={() => { isSelected3() }} style={{ fontSize: 18, color: selected3 ? "blue" : "black", borderWidth: selected3 ? 1 : 0, padding: selected3 ? 5 : 0 }}>{selectProduct.talle3}</Text>
+                        </View>
+                        {addButton ?
+                            <View>
+                                <Text style={{ fontSize: 12, color: 'red' }}>Debe seleccionar un talle</Text>
+                            </View>
+                            :
+                            null
+                        }
+                        <Button color="#334257" title={"Agregar al carrito"} onPress={() => { closeModalAdd() }} />
                         <View style={{ marginTop: 10 }}>
                             <Button color="#334257" title={"Cerrar"} onPress={closeModal} />
                         </View>

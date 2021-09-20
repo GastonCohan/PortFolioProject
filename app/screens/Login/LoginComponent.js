@@ -9,7 +9,7 @@ import * as Google from 'expo-google-app-auth';
 import firebase from "firebase";
 import * as Facebook from 'expo-facebook';
 import { auth } from "../../firebase/firebase";
-
+import Spinner from "react-native-loading-spinner-overlay";
 
 const startImageBackground = { uri: "https://con-actitud.com.ar/wp-content/uploads/2021/04/Logo-Actitud-01-Recuperado.jpg_0001_Capa-1.jpg" }
 const passwordHiddenIcon = require('../../assets/ic-show-password.png');
@@ -26,18 +26,17 @@ export const LoginComponent = () => {
     const [email, onEmailChange] = React.useState('');
     const [password, onPasswordChange] = React.useState('');
     const [showPassword, setShowPassword] = React.useState(false);
+    const [showLoading, setShowLoading] = React.useState(false);
 
 
     // Methods
 
     useEffect(() => {
-        const unsubscribe = auth.onAuthStateChanged((authUser) => {
+        auth.onAuthStateChanged((authUser) => {
             if (authUser) {
                 navigation.replace("Home")
             }
         });
-
-        return unsubscribe
     }, [])
 
     const usernameIsInvalid = () => {
@@ -118,18 +117,33 @@ export const LoginComponent = () => {
         }
     }
 
-    const loginwithemail = () => {
-        firebase
-            .auth()
-            .signInWithEmailAndPassword(email, password)
-            .then(() => {
-                navigation.replace('Home')
-            })
-            .catch(error => { alert(error.message) })
+    const errorFunction = (error) => {
+        alert(error.message)
+        setShowLoading(false);
+    }
+
+    const loginwithemail = async () => {
+
+        setShowLoading(true)
+
+        try {
+            firebase
+                .auth()
+                .signInWithEmailAndPassword(email, password)
+                .then(() => {
+                    setShowLoading(false)
+                    navigation.navigate('Home')
+                })
+                .catch(error => { errorFunction(error) })
+        } catch (error) {
+            setShowLoading(false)
+            console.log(error);
+        }
     }
 
     return (
         <ImageBackground source={startImageBackground} resizeMode="cover" style={styles.image}>
+            <Spinner visible={showLoading} />
             <View style={styles.container}>
                 <View style={styles.logoContainer}>
 
@@ -205,7 +219,7 @@ export const LoginComponent = () => {
                         </View>
                     </View>
                     <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: 12, }}>
-                        <Button style={styles.button} onPress={loginwithemail}>
+                        <Button style={styles.button} onPress={() => loginwithemail()}>
                             <Text style={styles.text}>Ingresar</Text>
                         </Button>
                     </View>

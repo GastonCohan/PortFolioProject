@@ -38,10 +38,6 @@ export const AppRootStack = () => {
                             headerShown: false,
                         }}
                     />
-                    {/* <AppStackNavigation.Screen name={'Home'}
-                        component={HomeComponent}
-                        options={{ headerShown: true }}
-                    /> */}
                     <AppStackNavigation.Screen name={'Men Shirts'}
                         component={MenShirts}
                         options={{
