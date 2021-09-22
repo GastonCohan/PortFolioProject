@@ -40,6 +40,7 @@ export const BuyConfirmComponent = () => {
     const [piso] = React.useState(pisoRecived);
     const [codigoPostal] = React.useState(codigoPostalRecived);
     const [barrio] = React.useState(barrioRecived);
+    const [showLoading, setShowLoading] = React.useState(false);
 
     const goBack = () => {
         navigation.goBack("Formulario de compra");
@@ -51,11 +52,11 @@ export const BuyConfirmComponent = () => {
 
     const metodoDeEntrega = () => {
         if (metodoDeEntregaEnIos === "rl") {
-            return "Retirar en local (Calasanz 1578)"
+            return "Retirar en local (Puan 1578)"
         } if (metodoDeEntregaEnIos === "ed") {
             return "Entregar en dirección propia"
         } if (metodoDeEntregaEnAndroid === "rl") {
-            return "Retirar en local (Calasanz 1578)"
+            return "Retirar en local (Puan 1578)"
         } if (metodoDeEntregaEnAndroid === "ed") {
             return "Entregar en dirección propia"
         } else {
@@ -88,39 +89,25 @@ export const BuyConfirmComponent = () => {
     });
 
     const buyConfirm = () => {
-        // actualizar stock
 
-        updateStock()
+        setShowLoading(true)
 
-
-
-        // mandar mail a ambos (to do)
-
-        handleOnSubmit()
-
-        // alerta compra confirmada 
-
-        Alert.alert('Compra confirmada')
-
-        // limpiar carrito
-        clearCart()
-
-        // mandar a home
-        goToHome()
+        try {
+            // actualizar stock
+            updateStock()
+            // mandar mail a ambos (to do)
+            handleOnSubmit()
+            // alerta compra confirmada 
+            Alert.alert('Compra confirmada')
+            // limpiar carrito
+            clearCart()
+            // mandar a home
+            goToHome()
+        } catch (error) {
+            setShowLoading(false)
+            console.log(error);
+        }
     }
-
-    // const sendEmail = () => {
-    //     // emailjs.sendForm(`gmail`, "service_i8nbgw7X", e.target, `template_6gmra19`)
-
-    //         .then((result) => {
-    //             alert("Message Sent, We will get back to you shortly", result.text);
-    //         },
-    //             (error) => {
-    //                 alert("An error occurred, Please try again", error.text);
-    //             });
-    // };
-
-
 
     const addOrder = async (object) => {
         try {
@@ -145,13 +132,14 @@ export const BuyConfirmComponent = () => {
         addOrder(values);
     };
 
-
     const updateStock = () => {
         cart.forEach(item => {
             const docRef = db.collection("menShirts").doc(item.id);
             docRef.update({ stock: item.stock - item.quantity })
-            // const docRef2 = db.collection("legoProducts").doc(item.id);
-            // docRef2.update({ stock: item.stock - item.quantity })
+            const docRef2 = db.collection("menShoes").doc(item.id);
+            docRef2.update({ stock: item.stock - item.quantity })
+            const docRef3 = db.collection("menHoodies").doc(item.id);
+            docRef3.update({ stock: item.stock - item.quantity })
         })
     }
 
@@ -201,6 +189,7 @@ export const BuyConfirmComponent = () => {
                                                             </View>
                                                             <View style={{ marginLeft: 10, justifyContent: 'center' }}>
                                                                 <Text>{item.quantity} x {item.title}</Text>
+                                                                <Text style={{ marginTop: 3 }}>Talle: {item.size}</Text>
                                                                 <Text style={{ marginTop: 5, fontSize: 14, color: "grey" }}>$ {item.price}</Text>
                                                             </View>
                                                         </View>

@@ -81,6 +81,11 @@ export const RegisterComponent = ({ navigation }) => {
         }
     }
 
+    const RegisterCheck = () => {
+        setErrorModalVisible(false)
+        // navigation.navigate('Home')
+    }
+
     const register = async () => {
 
         setShowLoading(true)
@@ -88,10 +93,9 @@ export const RegisterComponent = ({ navigation }) => {
         if (username !== null && !passwordIsValid() && password === repeatPassword && validateEmail() && check === true) {
             auth
                 .createUserWithEmailAndPassword(email, password)
-                .then((authUser) => {
-                    authUser.user.updateProfile({
-                        displayName: username
-                    })
+                .then(() => {
+                    setErrorText("Usuario creado con éxito.")
+                    setErrorModalVisible(true)
                 })
                 .catch((error) => errorFunctionText(error));
         } else {
@@ -228,7 +232,7 @@ export const RegisterComponent = ({ navigation }) => {
                         </View>
                         <View>
                             <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-                                <Button color="#334257" style={styles.buttonRegister2} onPress={() => { setErrorModalVisible(false) }}>
+                                <Button color="#334257" style={styles.buttonRegister2} onPress={() => { RegisterCheck }}>
                                     <Text style={styles.text}>Cerrar</Text>
                                 </Button>
                             </View>

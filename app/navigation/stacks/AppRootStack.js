@@ -13,6 +13,8 @@ import { MenShoes } from "../../screens/Shop/MenShoes/MenShoes";
 import { BuyComponent } from "../../screens/Buy/BuyScreen";
 import MainDrawerStack from "./drawer/MainDrawerStack";
 import { BuyConfirmComponent } from "../../screens/Buy/BuyConfirmScreen";
+import { PasswordForget } from "../../screens/PasswordForget/PasswordForget";
+import { PasswordForgetSuccess } from "../../screens/PasswordForget/PasswordForgetSuccess";
 
 
 const AppStackNavigation = createStackNavigator();
@@ -25,6 +27,14 @@ export const AppRootStack = () => {
                 <AppStackNavigation.Navigator initialRouteName={LoginComponent}>
                     <AppStackNavigation.Screen name={'Login'}
                         component={LoginComponent}
+                        options={{ headerShown: false }}
+                    />
+                    <AppStackNavigation.Screen name={'PasswordForget'}
+                        component={PasswordForget}
+                        options={{ headerShown: false }}
+                    />
+                    <AppStackNavigation.Screen name={'PasswordForgetSuccess'}
+                        component={PasswordForgetSuccess}
                         options={{ headerShown: false }}
                     />
                     <AppStackNavigation.Screen name={'Registro'}

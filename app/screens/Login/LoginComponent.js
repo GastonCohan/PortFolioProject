@@ -65,6 +65,10 @@ export const LoginComponent = () => {
         navigation.dispatch(cleanStackAndGoToMainAction);
     }
 
+    const goToPasswordForget = () => {
+        navigation.navigate("PasswordForget");
+    }
+
     const goToRegister = () => {
         navigation.dispatch(StackActions.push("Registro"));
     }
@@ -208,7 +212,7 @@ export const LoginComponent = () => {
                         </View>
                     </View>
                     <View style={styles.recoverPasswordView}>
-                        <TouchableOpacity onPress={() => { }}>
+                        <TouchableOpacity onPress={() => { goToPasswordForget() }}>
                             <Text allowFontScaling={false} >He olvidado la contraseña</Text>
                         </TouchableOpacity>
                     </View>
