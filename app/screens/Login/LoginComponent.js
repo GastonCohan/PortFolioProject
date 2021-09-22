@@ -1,15 +1,17 @@
 import React, { useEffect } from "react";
-import { View, ImageBackground, StyleSheet, Text, Image } from "react-native";
+import { View, ImageBackground, StyleSheet, Text, Image, Alert, Modal } from "react-native";
 import { useNavigation, StackActions, CommonActions } from "@react-navigation/native";
 import { TextInput } from "react-native";
+import { Button } from "native-base";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import { Button } from 'native-base';
 import { Avatar } from 'react-native-elements';
 import * as Google from 'expo-google-app-auth';
 import firebase from "firebase";
 import * as Facebook from 'expo-facebook';
 import { auth } from "../../firebase/firebase";
 import Spinner from "react-native-loading-spinner-overlay";
+import STYLES from '../../components/Styles/Styles'
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 const startImageBackground = { uri: "https://con-actitud.com.ar/wp-content/uploads/2021/04/Logo-Actitud-01-Recuperado.jpg_0001_Capa-1.jpg" }
 const passwordHiddenIcon = require('../../assets/ic-show-password.png');
@@ -27,6 +29,8 @@ export const LoginComponent = () => {
     const [password, onPasswordChange] = React.useState('');
     const [showPassword, setShowPassword] = React.useState(false);
     const [showLoading, setShowLoading] = React.useState(false);
+    const [errorModalVisible, setErrorModalVisible] = React.useState(false);
+    const [errorText, setErrorText] = React.useState('')
 
 
     // Methods
@@ -118,14 +122,26 @@ export const LoginComponent = () => {
     }
 
     const errorFunction = (error) => {
-        alert(error.message)
+
         setShowLoading(false);
+
+        console.log(error)
+        if (error.message === "There is no user record corresponding to this identifier. The user may have been deleted.") {
+            setErrorText("No existe el usuario o ha sido eliminado")
+            setErrorModalVisible(true)
+        }
+        if (error.message === "The password is invalid or the user does not have a password.") {
+            setErrorText("No pudimos encontrarte con estos datos.")
+            setErrorModalVisible(true)
+        }
+        if (error.message === "The email address is badly formatted.") {
+            setErrorText("Debe ingresar el usuario y la contraseña")
+            setErrorModalVisible(true)
+        }
     }
 
     const loginwithemail = async () => {
-
         setShowLoading(true)
-
         try {
             firebase
                 .auth()
@@ -133,6 +149,7 @@ export const LoginComponent = () => {
                 .then(() => {
                     setShowLoading(false)
                     navigation.navigate('Home')
+                    console.log("Bienvenido: ", email)
                 })
                 .catch(error => { errorFunction(error) })
         } catch (error) {
@@ -179,6 +196,7 @@ export const LoginComponent = () => {
                                     autoCorrect={false}
                                     color="white"
                                     secureTextEntry={!showPassword}
+                                    width="90%"
                                 >
                                 </TextInput>
                                 <View style={{ alignItems: 'center' }}>
@@ -236,7 +254,33 @@ export const LoginComponent = () => {
                     </Button>
                 </View>
 
+                <Modal
+                    animationType="slide"
+                    transparent={true}
+                    visible={errorModalVisible}
+                    onRequestClose={() => setErrorModalVisible(false)}
+                >
+                    <View style={STYLES.modals.centeredView}>
+                        <View style={STYLES.modals.modalTitle}>
+                            <Text style={STYLES.modals.modalTitleText}>Aviso</Text>
+                        </View>
+                        <View style={STYLES.modals.modalView}>
+                            <View>
+                                <Text style={STYLES.modals.modalText}>{errorText}</Text>
+                            </View>
+                            <View>
+                                <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+                                    <Button color="#334257" style={styles.buttonRegister} onPress={() => { setErrorModalVisible(false) }}>
+                                        <Text style={styles.text}>Cerrar</Text>
+                                    </Button>
+                                </View>
+                            </View>
+                        </View>
+                    </View>
+                </Modal>
+
             </View >
+
         </ImageBackground>
     );
 }

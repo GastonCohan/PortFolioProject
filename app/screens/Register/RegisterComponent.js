@@ -1,14 +1,16 @@
-import React from "react";
-import { View, StyleSheet, Text, ImageBackground, Image } from "react-native";
+import React, { useLayoutEffect } from "react";
+import { View, StyleSheet, Text, ImageBackground, Image, TouchableOpacity, Modal } from "react-native";
 import { TextInput } from "react-native";
 import { Button, CheckBox } from 'native-base';
-import { TouchableOpacity } from "react-native-gesture-handler";
 import { auth } from "../../firebase/firebase";
+import Icon from 'react-native-vector-icons/Ionicons';
+import STYLES from "../../components/Styles/Styles";
+import Spinner from "react-native-loading-spinner-overlay";
 
 const passwordHiddenIcon = require('../../assets/ic-show-password.png');
 const passwordNotHiddenIcon = require('../../assets/ic-hide-password.png');
 
-export const RegisterComponent = () => {
+export const RegisterComponent = ({ navigation }) => {
 
     //Properties
 
@@ -18,8 +20,24 @@ export const RegisterComponent = () => {
     const [email, onEmailChange] = React.useState('');
     const [check, setOnCheck] = React.useState(false);
     const [showPassword, setShowPassword] = React.useState(false);
+    const [errorText, setError] = React.useState(false);
+    const [errorModalVisible, setErrorModalVisible] = React.useState(false);
+    const [errorText2, setErrorText] = React.useState('')
+    const [showLoading, setShowLoading] = React.useState(false);
 
     // Methods
+
+    useLayoutEffect(() => {
+        navigation.setOptions({
+            headerLeft: () => (
+                <View style={{ marginLeft: 20 }}>
+                    <TouchableOpacity onPress={() => navigation.goBack()}>
+                        <Icon name="arrow-back" size={25} color="white"> </Icon>
+                    </TouchableOpacity>
+                </View>
+            )
+        })
+    }, [])
 
     const toggleShowPassword = () => {
         setShowPassword(!showPassword);
@@ -30,19 +48,61 @@ export const RegisterComponent = () => {
         return check
     }
 
-    const register = () => {
-        auth
-            .createUserWithEmailAndPassword(email, password)
-            .then((authUser) => {
-                authUser.user.updateProfile({
-                    displayName: username
+    const goBack = () => {
+        navigation.goBack()
+    }
+
+    const validateEmail = () => {
+        let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+        if (reg.test(email)) {
+            return true;
+        }
+        else {
+            return false
+        }
+    }
+
+    const passwordIsValid = () => {
+        var pattern = new RegExp(/^(?=.\d)(?=.[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/)
+        if (pattern.test(password)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    const errorFunctionText = (error) => {
+
+        setShowLoading(false);
+
+        if (error.message === "The email address is already in use by another account.") {
+            setErrorText("El mail ingresado ya se encuentra en uso.")
+            setErrorModalVisible(true)
+        }
+    }
+
+    const register = async () => {
+
+        setShowLoading(true)
+
+        if (username !== null && !passwordIsValid() && password === repeatPassword && validateEmail() && check === true) {
+            auth
+                .createUserWithEmailAndPassword(email, password)
+                .then((authUser) => {
+                    authUser.user.updateProfile({
+                        displayName: username
+                    })
                 })
-            })
-            .catch((error) => alert(error.message));
+                .catch((error) => errorFunctionText(error));
+        } else {
+            setError(true)
+            setShowLoading(false)
+        }
     };
 
     return (
         <View style={{ flex: 1, backgroundColor: '#C9CCD5' }}>
+            <Spinner visible={showLoading} />
             <View style={{ flex: 0.1, alignItems: 'center', justifyContent: 'center', marginTop: '10%', marginBottom: "-25%" }}>
                 <Text style={{ fontSize: 20 }}>Andiamo Project </Text>
             </View>
@@ -71,10 +131,11 @@ export const RegisterComponent = () => {
                                 autoCorrect={false}
                                 color="white"
                                 secureTextEntry={!showPassword}
+                                width="90%"
                             >
                             </TextInput>
                             <View style={{ alignItems: 'center' }}>
-                                <TouchableOpacity onPress={toggleShowPassword} style={{ flex: 2, marginRight: 8, marginTop: 8 }}>
+                                <TouchableOpacity onPress={toggleShowPassword} style={{ flex: 2, marginRight: 8, justifyContent: 'center' }}>
                                     <Image source={showPassword ? passwordNotHiddenIcon : passwordHiddenIcon} style={{ width: 24, height: 24, resizeMode: "contain", tintColor: "white" }} />
                                 </TouchableOpacity>
                             </View>
@@ -92,10 +153,11 @@ export const RegisterComponent = () => {
                                 autoCorrect={false}
                                 color="white"
                                 secureTextEntry={!showPassword}
+                                width="90%"
                             >
                             </TextInput>
                             <View style={{ alignItems: 'center' }}>
-                                <TouchableOpacity onPress={toggleShowPassword} style={{ flex: 2, marginRight: 8, marginTop: 8 }}>
+                                <TouchableOpacity onPress={toggleShowPassword} style={{ flex: 2, marginRight: 40, justifyContent: 'center' }}>
                                     <Image source={showPassword ? passwordNotHiddenIcon : passwordHiddenIcon} style={{ width: 24, height: 24, resizeMode: "contain", tintColor: "white" }} />
                                 </TouchableOpacity>
                             </View>
@@ -122,11 +184,19 @@ export const RegisterComponent = () => {
                             onPress={() => checkBox()}
                         />
                     </View>
+
                     <TouchableOpacity>
                         <Text allowFontScaling={false} >He leído y acepto los términos.</Text>
                     </TouchableOpacity>
                 </View>
-                <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: "10%" }}>
+                {errorText ?
+                    <View style={{ alignItems: 'center', marginTop: 15 }}>
+                        <Text style={{ color: 'red', textAlign: "center" }}> Completá los datos de forma adecuada {"\n"} para poder avanzar</Text>
+                    </View>
+                    :
+                    null
+                }
+                <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: "8%" }}>
                     <Button style={styles.buttonRegister} onPress={register}>
                         <View style={{ justifyContent: 'center', alignItems: 'center', flex: 1 }}>
                             <Text style={styles.text}>Registrarse</Text>
@@ -134,13 +204,38 @@ export const RegisterComponent = () => {
                     </Button>
                 </View>
                 <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: "5%" }}>
-                    <Button style={styles.buttonRegister} onPress={{}}>
+                    <Button style={styles.buttonRegister} onPress={goBack}>
                         <View style={{ justifyContent: 'center', alignItems: 'center', flex: 1 }}>
                             <Text style={styles.text}>Volver</Text>
                         </View>
                     </Button>
                 </View>
-            </View >
+            </View>
+
+            <Modal
+                animationType="slide"
+                transparent={true}
+                visible={errorModalVisible}
+                onRequestClose={() => setErrorModalVisible(false)}
+            >
+                <View style={STYLES.modals.centeredView}>
+                    <View style={STYLES.modals.modalTitle}>
+                        <Text style={STYLES.modals.modalTitleText}>Aviso</Text>
+                    </View>
+                    <View style={STYLES.modals.modalView}>
+                        <View>
+                            <Text style={STYLES.modals.modalText}>{errorText2}</Text>
+                        </View>
+                        <View>
+                            <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+                                <Button color="#334257" style={styles.buttonRegister2} onPress={() => { setErrorModalVisible(false) }}>
+                                    <Text style={styles.text}>Cerrar</Text>
+                                </Button>
+                            </View>
+                        </View>
+                    </View>
+                </View>
+            </Modal>
         </View>
     );
 }
@@ -163,7 +258,12 @@ const styles = StyleSheet.create({
         width: '70%',
         justifyContent: "center",
         backgroundColor: '#334257',
-        alignItems: 'center'
+        alignItems: 'center',
+    },
+    buttonRegister2: {
+        width: '100%',
+        justifyContent: "center",
+        backgroundColor: '#334257'
     },
     text: {
         color: "white",
@@ -174,7 +274,7 @@ const styles = StyleSheet.create({
         width: "100%"
     },
     recoverPasswordView: {
-        marginTop: "5%",
+        marginTop: "8%",
         flexDirection: 'row'
     },
 });

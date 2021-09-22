@@ -1,21 +1,34 @@
-import React from "react";
-import { View, StyleSheet, ScrollView, Text } from "react-native";
+import React, { useLayoutEffect } from "react";
+import { View, StyleSheet, ScrollView, Text, TouchableOpacity } from "react-native";
 import { useCartContext } from "../../context/CartContext";
 import { Container, Header, Content, List, ListItem, Thumbnail, Left, Body, Right, Button } from 'native-base';
 import { useNavigation, StackActions } from "@react-navigation/native";
+import Icon from 'react-native-vector-icons/Ionicons';
 
-export const CartComponent = () => {
+export const CartComponent = ({ navigation }) => {
 
     const { cart, clearCart } = useCartContext();
 
     //Properties
 
-    const navigation = useNavigation();
+    const navigation2 = useNavigation();
 
     // Methods
 
+    useLayoutEffect(() => {
+        navigation.setOptions({
+            headerLeft: () => (
+                <View style={{ marginLeft: 20 }}>
+                    <TouchableOpacity onPress={() => navigation2.goBack()}>
+                        <Icon name="arrow-back" size={25} color="white"> </Icon>
+                    </TouchableOpacity>
+                </View>
+            )
+        })
+    }, [])
+
     const goToBuyForm = () => {
-        navigation.dispatch(StackActions.push("Formulario de Compra"));
+        navigation2.dispatch(StackActions.push("Formulario de Compra"));
     }
 
     const totalPrice = () => cart.reduce((acc, item) => {
@@ -51,6 +64,7 @@ export const CartComponent = () => {
                                             </Left>
                                             <Body>
                                                 <Text>{item.quantity} x {item.title}</Text>
+                                                <Text>Talle: {item.size}</Text>
                                                 <Text style={{ marginTop: 5, fontSize: 14, color: "grey" }}>$ {item.price}</Text>
                                             </Body>
                                             <Right>

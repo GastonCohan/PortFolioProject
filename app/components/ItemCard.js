@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react"
-import { Image, StyleSheet, View, Alert, Modal, Button, TouchableOpacityBase } from 'react-native';
+import { Image, View, Modal, Button } from 'react-native';
 import { Card, CardItem, Text, Body } from 'native-base';
 import { db } from "../firebase/firebase";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import Icon from 'react-native-vector-icons/FontAwesome';
 import STYLES from './Styles/Styles'
 import { useCartContext } from "../context/CartContext";
+import Spinner from "react-native-loading-spinner-overlay";
 
 
 export const ItemCard = (props) => {
@@ -21,6 +22,8 @@ export const ItemCard = (props) => {
     const [selected2, setIsSelected2] = useState(false)
     const [selected3, setIsSelected3] = useState(false)
     const [addButton, setAddButton] = useState(false)
+    const [showLoading, setShowLoading] = useState(false);
+    const [selectedSize, setSelectedSize] = useState('')
 
     // console.log("contador: ", contador)
     // console.log("producto seleccionado: ", selectProduct)
@@ -30,20 +33,27 @@ export const ItemCard = (props) => {
     useEffect(() => {
         // setProducts(productsData);
         getProducts()
+        setShowLoading(false)
     }, []);
 
-    const getProducts = () => {
-        const docs = [];
-        db.collection(props.collection).onSnapshot((querySnapshot) => {
-            querySnapshot.forEach((doc) => {
-                docs.push({ ...doc.data(), id: doc.id })
-            });
-            setProductos(docs)
-        })
+    const getProducts = async () => {
+        setShowLoading(true)
+        try {
+            const docs = [];
+            db.collection(props.collection).onSnapshot((querySnapshot) => {
+                querySnapshot.forEach((doc) => {
+                    docs.push({ ...doc.data(), id: doc.id })
+                });
+                setProductos(docs)
+                setShowLoading(false)
+            })
+        } catch (error) {
+            setShowLoading(false)
+            console.log(error);
+        }
     }
 
     const addToCartCheck = (producto) => {
-        // return Alert.alert('Funcionabilidad no disponible..')
         setErrorModalVisible(true);
         setSelectProduct(producto)
     }
@@ -67,11 +77,12 @@ export const ItemCard = (props) => {
         setIsSelected1(false)
         setIsSelected2(false)
         setIsSelected3(false)
+        setSelectedSize('')
     }
 
     const closeModalAdd = () => {
-        if (selected1 === true || selected1 === true || selected1 === true) {
-            addToCart(selectProduct, contador);
+        if (selected1 === true || selected2 === true || selected3 === true) {
+            addToCart(selectProduct, contador, selectedSize);
             // addSize(selectProduct, )
             setErrorModalVisible(false)
             setContador(1)
@@ -79,6 +90,7 @@ export const ItemCard = (props) => {
             setIsSelected2(false)
             setIsSelected3(false)
             setAddButton(false)
+            setSelectedSize('')
         } else {
             setAddButton(true)
         }
@@ -88,21 +100,25 @@ export const ItemCard = (props) => {
         setIsSelected1(true)
         setIsSelected2(false)
         setIsSelected3(false)
+        setSelectedSize("S")
     }
 
     const isSelected2 = () => {
         setIsSelected1(false)
         setIsSelected2(true)
         setIsSelected3(false)
+        setSelectedSize("M")
     }
 
     const isSelected3 = () => {
         setIsSelected1(false)
         setIsSelected2(false)
         setIsSelected3(true)
+        setSelectedSize("L")
     }
     return (
         <View style={{ width: '100%' }}>
+            <Spinner visible={showLoading} />
             {productos.map((producto) => {
                 return (
                     // <TouchableOpacity onPress={goToDetailItem}>
@@ -182,7 +198,7 @@ export const ItemCard = (props) => {
                         }
                         <Button color="#334257" title={"Agregar al carrito"} onPress={() => { closeModalAdd() }} />
                         <View style={{ marginTop: 10 }}>
-                            <Button color="#334257" title={"Cerrar"} onPress={closeModal} />
+                            <Button color="#334257" title="Cerrar" onPress={closeModal} />
                         </View>
                     </View>
                 </View>

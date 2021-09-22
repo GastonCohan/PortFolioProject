@@ -9,19 +9,24 @@ export const CartProvider = ({ children }) => {
     const [cart, setCart] = useState([]);
     const clearCart = () => setCart([]);
     const isInCart = id => cart.some(item => item.id === id);
+    const isInCart2 = size => cart.some(item => item.size === size);
 
-    const addToCart = (item, quantity) => {
+    console.log("hola1", isInCart())
+    console.log("hola2", isInCart2())
+
+    const addToCart = (item, quantity, size) => {
         console.log("item: ", item)
         console.log("qty: ", quantity)
-        if (isInCart(item.id)) {
+        console.log("size: ", size)
+        if (isInCart(item.id) && isInCart2(item.size)) {
             const newCart = cart.map(cartElement => {
                 if (cartElement.id === item.id) {
-                    return { ...cartElement, quantity: cartElement.quantity + quantity }
+                    return { ...cartElement, quantity: cartElement.quantity + quantity, size: cartElement.size }
                 } else return cartElement;
             })
             setCart(newCart);
         } else {
-            setCart(prev => [...prev, { ...item, quantity }]);
+            setCart(prev => [...prev, { ...item, quantity, size }]);
         }
     };
 

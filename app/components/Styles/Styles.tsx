@@ -56,8 +56,10 @@ const STYLES = {
             textAlign: 'center',
         } as ViewStyle,
         modalText: {
-            marginBottom: 15,
+            marginBottom: 20,
             textAlign: 'center',
+            marginTop: 10
+
         } as ViewStyle
     },
     buttons: {

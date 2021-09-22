@@ -30,7 +30,12 @@ export const AppRootStack = () => {
                     <AppStackNavigation.Screen name={'Registro'}
                         component={RegisterComponent}
                         options={{
-                            headerShown: true
+                            headerShown: true,
+                            headerStyle: {
+                                backgroundColor: '#334257'
+                            },
+                            headerTintColor: "#fff",
+                            headerBackTitleVisible: false
                         }} />
                     <AppStackNavigation.Screen name={'Home'}
                         component={MainDrawerStack}

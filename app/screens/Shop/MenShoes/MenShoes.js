@@ -1,13 +1,29 @@
-import React from "react";
-import { View, StyleSheet, ScrollView } from "react-native";
+import React, { useLayoutEffect } from "react";
+import { View, StyleSheet, ScrollView, TouchableOpacity } from "react-native";
 import { ItemCard } from "../../../components/ItemCard";
 import SearchBarComponent from "../../../components/SearchBar";
+import Icon from 'react-native-vector-icons/Ionicons';
+import { useNavigation } from "@react-navigation/native";
 
-export const MenShoes = () => {
+export const MenShoes = ({ navigation }) => {
 
     //Properties
 
+    const navigation2 = useNavigation();
+
     // Methods
+
+    useLayoutEffect(() => {
+        navigation.setOptions({
+            headerLeft: () => (
+                <View style={{ marginLeft: 20 }}>
+                    <TouchableOpacity onPress={() => navigation2.goBack()}>
+                        <Icon name="arrow-back" size={25} color="white"> </Icon>
+                    </TouchableOpacity>
+                </View>
+            )
+        })
+    }, [])
 
     return (
         <View style={styles.container}>
