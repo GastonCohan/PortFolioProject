@@ -11,8 +11,8 @@ export const CartProvider = ({ children }) => {
     const isInCart = id => cart.some(item => item.id === id);
     const isInCart2 = size => cart.some(item => item.size === size);
 
-    console.log("hola1", isInCart())
-    console.log("hola2", isInCart2())
+    // console.log("hola1", isInCart())
+    // console.log("hola2", isInCart2())
 
     const addToCart = (item, quantity, size) => {
         console.log("item: ", item)

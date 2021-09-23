@@ -135,11 +135,15 @@ export const LoginComponent = () => {
             setErrorModalVisible(true)
         }
         if (error.message === "The password is invalid or the user does not have a password.") {
-            setErrorText("No pudimos encontrarte con estos datos.")
+            setErrorText("Contraseña incorrecta.")
             setErrorModalVisible(true)
         }
         if (error.message === "The email address is badly formatted.") {
             setErrorText("Debe ingresar el usuario y la contraseña")
+            setErrorModalVisible(true)
+        }
+        if (error.message === "Access to this account has been temporarily disabled due to many failed login attempts. You can immediately restore it by resetting your password or you can try again later.") {
+            setErrorText("El acceso a esta cuenta se ha desactivado temporalmente debido a muchos intentos fallidos de inicio de sesión. Puede restaurarlo inmediatamente restableciendo su contraseña o puede intentarlo de nuevo más tarde.")
             setErrorModalVisible(true)
         }
     }
@@ -233,7 +237,7 @@ export const LoginComponent = () => {
                                 <Avatar
                                     rounded
                                     size='medium'
-                                    icon={{ name: 'email', color: 'white', type: 'Zocial' }}
+                                    icon={{ name: 'mail', color: 'white', type: 'Zocial' }}
                                     activeOpacity={0.7}
                                     backgroundColor="red"
                                 />

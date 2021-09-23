@@ -35,15 +35,11 @@ export const PasswordForget = () => {
 
         console.log(error)
         if (error.message === "There is no user record corresponding to this identifier. The user may have been deleted.") {
-            setErrorText("No existe el email o ha sido eliminado")
-            setErrorModalVisible(true)
-        }
-        if (error.message === "The password is invalid or the user does not have a password.") {
-            setErrorText("No pudimos encontrarte con estos datos.")
+            setErrorText("El email ingresado no se encuentra en uso. Por favor, ingresa un email válido.")
             setErrorModalVisible(true)
         }
         if (error.message === "The email address is badly formatted.") {
-            setErrorText("Debe ingresar el usuario y la contraseña")
+            setErrorText("Debe ingresar un email válido")
             setErrorModalVisible(true)
         }
     }

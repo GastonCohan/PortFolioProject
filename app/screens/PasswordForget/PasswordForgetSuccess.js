@@ -32,10 +32,10 @@ export const PasswordForgetSuccess = () => {
             <View style={styles.container}>
                 <View style={styles.optionsContainer}>
                     <View style={{ marginBottom: 10 }}>
-                        <Text style={{ fontSize: 18, textAlign: 'center' }}>
+                        <Text style={{ fontSize: 20, textAlign: 'center' }}>
                             ¡Email enviado con éxito!
                         </Text>
-                        <Text style={{ fontSize: 18, textAlign: 'center', marginTop: 8 }}>
+                        <Text style={{ fontSize: 16, textAlign: 'center', marginTop: 8 }}>
                             Busca en tu bandeja de entrada el email y reestablece la contraseña.
                         </Text>
                     </View>

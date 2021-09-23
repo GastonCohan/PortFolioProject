@@ -83,7 +83,6 @@ export const RegisterComponent = ({ navigation }) => {
 
     const RegisterCheck = () => {
         setErrorModalVisible(false)
-        // navigation.navigate('Home')
     }
 
     const register = async () => {
@@ -107,9 +106,9 @@ export const RegisterComponent = ({ navigation }) => {
     return (
         <View style={{ flex: 1, backgroundColor: '#C9CCD5' }}>
             <Spinner visible={showLoading} />
-            <View style={{ flex: 0.1, alignItems: 'center', justifyContent: 'center', marginTop: '10%', marginBottom: "-25%" }}>
+            {/* <View style={{ flex: 0.1, alignItems: 'center', justifyContent: 'center', marginTop: '10%', marginBottom: "-25%" }}>
                 <Text style={{ fontSize: 20 }}>Andiamo Project </Text>
-            </View>
+            </View> */}
             <View style={styles.container}>
                 <View style={styles.input}>
                     <View style={{ justifyContent: 'flex-start', paddingHorizontal: 15 }}>

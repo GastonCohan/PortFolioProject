@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="3929a526-b284-48f7-b43b-0314a40e39c1" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/app.json" beforeDir="false" afterPath="$PROJECT_DIR$/app.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/context/CartContext.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/context/CartContext.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/screens/Login/LoginComponent.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/screens/Login/LoginComponent.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/screens/PasswordForget/PasswordForget.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/screens/PasswordForget/PasswordForget.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/screens/PasswordForget/PasswordForgetSuccess.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/screens/PasswordForget/PasswordForgetSuccess.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/screens/Register/RegisterComponent.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/screens/Register/RegisterComponent.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1yXJMGZ4Q9C9nzjjwrGT2DZFtXk" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
+    <property name="AnalyzeApkAction.lastApkPath" value="$PROJECT_DIR$" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="3929a526-b284-48f7-b43b-0314a40e39c1" name="Default Changelist" comment="" />
+      <created>1632391949861</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1632391949861</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="181" y="89" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1632400702765">
+      <screen x="0" y="25" width="1440" height="811" />
+    </state>
+    <state x="181" y="89" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.25.1440.811@0.25.1440.811" timestamp="1632400702765" />
+    <state x="218" y="66" key="SettingsEditor" timestamp="1632393965717">
+      <screen x="0" y="25" width="1440" height="811" />
+    </state>
+    <state x="218" y="66" key="SettingsEditor/0.25.1440.811@0.25.1440.811" timestamp="1632393965717" />
+    <state width="581" height="445" key="SwitcherDM" timestamp="1632394053068">
+      <screen x="0" y="25" width="1440" height="811" />
+    </state>
+    <state width="581" height="445" key="SwitcherDM/0.25.1440.811@0.25.1440.811" timestamp="1632394053068" />
+    <state x="385" y="160" width="670" height="676" key="search.everywhere.popup" timestamp="1632394048899">
+      <screen x="0" y="25" width="1440" height="811" />
+    </state>
+    <state x="385" y="160" width="670" height="676" key="search.everywhere.popup/0.25.1440.811@0.25.1440.811" timestamp="1632394048899" />
+  </component>
+</project>
