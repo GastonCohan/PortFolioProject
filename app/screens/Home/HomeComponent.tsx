@@ -166,26 +166,30 @@ export const HomeComponent = (props) => {
                                         </TouchableOpacity>
                                     </View>
                                     <View style={{ justifyContent: 'center', alignItems: 'center', flex: 1, height: 200, marginTop: '2%' }}>
-                                        <ImageBackground
-                                            source={require('../../assets/zapatillasMujerOption.jpg')}
-                                            style={styles.remeraOption}
-                                            resizeMode="cover"
-                                        >
-                                            <View style={{ justifyContent: "center", flex: 1, alignItems: "center" }}>
-                                                <Text style={{ color: "black", fontSize: 25 }}>Zapatillas</Text>
-                                            </View>
-                                        </ImageBackground>
+                                        <TouchableOpacity style={{ width: "100%" }}>
+                                            <ImageBackground
+                                                source={require('../../assets/zapatillasMujerOption.jpg')}
+                                                style={styles.remeraOption}
+                                                resizeMode="cover"
+                                            >
+                                                <View style={{ justifyContent: "center", flex: 1, alignItems: "center" }}>
+                                                    <Text style={{ color: "black", fontSize: 25 }}>Zapatillas</Text>
+                                                </View>
+                                            </ImageBackground>
+                                        </TouchableOpacity>
                                     </View>
                                     <View style={{ justifyContent: 'center', alignItems: 'center', flex: 1, height: 200, marginBottom: "2%", marginTop: '2%' }}>
-                                        <ImageBackground
-                                            source={require('../../assets/buzosMujerOption.jpg')}
-                                            style={styles.remeraOption}
-                                            resizeMode="cover"
-                                        >
-                                            <View style={{ justifyContent: "center", flex: 1, alignItems: "center" }}>
-                                                <Text style={{ color: "black", fontSize: 25 }}>Buzos</Text>
-                                            </View>
-                                        </ImageBackground>
+                                        <TouchableOpacity style={{ width: "100%" }}>
+                                            <ImageBackground
+                                                source={require('../../assets/buzosMujerOption.jpg')}
+                                                style={styles.remeraOption}
+                                                resizeMode="cover"
+                                            >
+                                                <View style={{ justifyContent: "center", flex: 1, alignItems: "center" }}>
+                                                    <Text style={{ color: "black", fontSize: 25 }}>Buzos</Text>
+                                                </View>
+                                            </ImageBackground>
+                                        </TouchableOpacity>
                                     </View>
                                 </ScrollView>
                                 :
